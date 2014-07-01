@@ -27,12 +27,12 @@ public class Spawner : MonoBehaviour {
     {
         startTime = 0;
         deltaTime = 0;
-        gameOn = false;
+        gameOn = true;
         currentWave = 1;
         hasStarted = false;
         levelDuration = 180f;
         numWaves = 10;
-        timeToStart = 30;
+        timeToStart = 5;
         data = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>();
         level = data.getCurrentLevel();
         enemies = data.enemies;
