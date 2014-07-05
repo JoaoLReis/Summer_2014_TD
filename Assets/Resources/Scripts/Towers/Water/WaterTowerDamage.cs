@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WaterTowerDamage : TowerDamage {
 
+    private int type;
+
     void Awake()
     {
         stats = GetComponent<TowerStats>();
@@ -15,6 +17,7 @@ public class WaterTowerDamage : TowerDamage {
     {
         weapon = tBehaviour.getWeapon();
         target = tBehaviour.getTarget().gameObject.GetComponent<EnemyStats>();
+        type = stats.getType();
     }
 
     public IEnumerator damageTarget()
@@ -26,7 +29,7 @@ public class WaterTowerDamage : TowerDamage {
                 yield break;
             if (target == null)
                 tBehaviour.recalculateTarget();
-            else if (target.decreaseHealth(1, stats.getArmorPen(), (int)Element.FIRE))
+            else if (target.decreaseHealth(1, stats.getArmorPen(), type))
             {
                 Debug.Log("RETURNED TRUE");
                 yield return new WaitForEndOfFrame();

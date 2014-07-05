@@ -10,6 +10,9 @@ public class GlobalData : MonoBehaviour{
     public Object[] enemies;
     private List<GameObject> relays;
 
+    // TABLE CONTAINING DAMAGE FROM DIFFERENT SOURCES
+    private float[] vulnerability = {0, 1, 2, 2, 0, 1.5f, 0, 1, 2, 1, 1, 1, 2, 1.5f, 0.5f, 1, 1, 1, 0, 0, 1, 1.5f, 3, 1};
+
     //#####################################################
     //Idealy we would set the order of spawning in an array
     //#####################################################
@@ -30,6 +33,11 @@ public class GlobalData : MonoBehaviour{
         currentLevel = 1;
         enemies = Resources.LoadAll("Enemies");
         relays = new List<GameObject>();
+    }
+
+    public float[] getVulnerability()
+    {
+        return vulnerability;
     }
 
     public float[] getCurrentLevel()

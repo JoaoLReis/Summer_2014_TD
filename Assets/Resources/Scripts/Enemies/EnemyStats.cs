@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public abstract class EnemyStats : Imports {
+
+    protected int numElements;
+    protected int numEnemies;
 
     // BASE STATS
     protected int health;
@@ -13,6 +18,19 @@ public abstract class EnemyStats : Imports {
     protected int armor;
     /* IN CASE WE HAVE A SURVIVAL MODE */protected int rank;
     public int value;
+
+    // TABLE CONTAINING DAMAGE FROM DIFFERENT SOURCES
+    protected float[] vulnerability;
+
+
+
+    //######################## INIT ####################
+    protected void init()
+    {
+        vulnerability = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>().getVulnerability();
+        numElements = sizeOfElements();
+        numEnemies = sizeOfEnemyTypes();
+    }
 
     //################# ATTACK SPEED ####################
     public void increaseATKSpeed(float percentage)
@@ -39,7 +57,12 @@ public abstract class EnemyStats : Imports {
     //################# HEALTH ###################
     public bool decreaseHealth(int num, float armPen, int type)
     {
-        health -= (int) (num - armor*(1-armPen));
+        Debug.Log("Type: " + this.type);
+        Debug.Log("DamagerType: " + type);
+        int index = this.type * numElements + type;
+        Debug.Log("Index: " + index);
+        Debug.Log("tableValue: " + vulnerability[index]);
+        health -= (int)((num - armor * (1 - armPen)) * vulnerability[index]);
         if(health < 1)
         {
             //Atribuir valor ao jogador

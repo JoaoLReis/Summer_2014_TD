@@ -9,10 +9,11 @@ public class WaterElementalStats : EnemyStats {
         damage = 1;
         atkSpeed = 1;
         buildingDamage = 2f;
-        type = (int)Element.WATER;
+        type = (int)EnemyTypes.WATER;
         rank = 1;
         armor = 0;
         value = 10;
+        init();
     }
 
     // Use this for initialization
