@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-public class WaterTowerDamage : TowerDamage {
+public class EarthTowerDamage : TowerDamage {
+
+    private EarthProjectilesManager bulletManager;
 
     void Awake()
     {
         stats = GetComponent<TowerStats>();
         tBehaviour = GetComponent<TowerBehaviour>();
+        bulletManager = GetComponent<EarthProjectilesManager>();
         stopped = true;
     }
 
@@ -26,13 +31,17 @@ public class WaterTowerDamage : TowerDamage {
                 yield break;
             if (target == null)
                 tBehaviour.recalculateTarget();
-            else if (target.decreaseHealth(1, stats.getArmorPen(), (int)Element.FIRE))
+            else
+            {
+                bulletManager.fireBullet();
+            }
+            /*else if (target.decreaseHealth(1, stats.getArmorPen(), (int)Element.EARTH))
             {
                 Debug.Log("RETURNED TRUE");
                 yield return new WaitForEndOfFrame();
                 tBehaviour.recalculateTarget();
-            }
-            yield return new WaitForSeconds(1 / stats.getSpeed() / stats.getDamage());
+            }*/
+            yield return new WaitForSeconds(1 / stats.getSpeed());
         }
     }
 

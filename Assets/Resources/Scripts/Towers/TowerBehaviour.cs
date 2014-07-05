@@ -39,18 +39,21 @@ public abstract class TowerBehaviour : Imports {
 
     protected void OnTriggerExit(Collider other)
     {
-        inRange.Remove(target.gameObject);
-        if (target.gameObject == other.gameObject)
+        if (other.gameObject.tag == "Enemy")
         {
-            if (inRange.Count > 0)
+            inRange.Remove(target.gameObject);
+            if (target.gameObject == other.gameObject)
             {
-                target = inRange.First().transform;
-                aim.setActiveTarget(target);
-                damager.updateTarget(target);
-            }
-            else
-            {
-                disableFiring();
+                if (inRange.Count > 0)
+                {
+                    target = inRange.First().transform;
+                    aim.setActiveTarget(target);
+                    damager.updateTarget(target);
+                }
+                else
+                {
+                    disableFiring();
+                }
             }
         }
     }
@@ -72,11 +75,11 @@ public abstract class TowerBehaviour : Imports {
             if (!firing)
                 yield break;
             yield return new WaitForSeconds(0.2f);
-            recalculateTarget();
+            updateTarget();
         }
     }
 
-    public void recalculateTarget()
+    private void updateTarget()
     {
         if (target == null)
         {
@@ -96,8 +99,30 @@ public abstract class TowerBehaviour : Imports {
         }
     }
 
+    public void recalculateTarget()
+    {
+        if (target == null)
+        {
+            Debug.Log("TARGET == NULL");
+            inRange.RemoveAll(item => item == null);
+            if (inRange.Count > 0)
+            {
+                inRange.RemoveAll(item => item == null);
+                target = inRange.First().transform;
+                aim.setActiveTarget(target);
+                damager.updateTarget(target);
+            }
+            else
+            {
+                disableFiring();
+                damager.stop();
+            }
+        }
+    }
+
     protected void enableFiring(Transform t)
     {
+        Debug.Log("EnableFiring");
         target = t;
         aim.setActiveTarget(target);
         aim.enabled = true;
@@ -115,7 +140,6 @@ public abstract class TowerBehaviour : Imports {
         currentWeapon.SetActive(false);
         aim.enabled = false;
         aim.setActiveTarget(null);
-        damager.stop();
         damager.enabled = false;
         firing = false;
     }

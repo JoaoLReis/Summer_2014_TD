@@ -12,6 +12,7 @@ public class WaterTowerStats : TowerStats {
         armorPen = 0.2f;
         rank = 1;
         value = 100;
+        type = (int)Element.WATER;
     }
 
     //############### LEVELUP ##########

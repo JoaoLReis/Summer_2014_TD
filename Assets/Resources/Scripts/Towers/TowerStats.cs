@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class TowerStats : MonoBehaviour {
+public abstract class TowerStats : Imports {
 
     // BASE STATS
     protected int health;
@@ -10,6 +10,7 @@ public abstract class TowerStats : MonoBehaviour {
     protected float speed;
     protected float armorPen;
     protected int rank;
+    protected int type;
     public int value;
 
     //#################  SPEED ####################
@@ -78,5 +79,11 @@ public abstract class TowerStats : MonoBehaviour {
 
     //############# SELLING ################
     public abstract void sell();
+
+    //############### TYPE ################
+    public int getType()
+    {
+        return type;
+    }
 
 }

@@ -7,6 +7,7 @@ public class FireTowerDamage : TowerDamage
     {
         stats = GetComponent<TowerStats>();
         tBehaviour = GetComponent<TowerBehaviour>();
+        stopped = true;
     }
 
     // Use this for initialization
@@ -25,19 +26,14 @@ public class FireTowerDamage : TowerDamage
                 yield break;
             if (target == null)
                 tBehaviour.recalculateTarget();
-            else if (target.decreaseHealth(stats.getDamage(), stats.getArmorPen(), (int)Element.FIRE))
+            else if (target.decreaseHealth(1, stats.getArmorPen(), (int)Element.FIRE))
             {
                 Debug.Log("RETURNED TRUE");
                 yield return new WaitForEndOfFrame();
                 tBehaviour.recalculateTarget();
             }
-            yield return new WaitForSeconds(1 / stats.getSpeed());
+            yield return new WaitForSeconds(1 / stats.getSpeed() / stats.getDamage());
         }
-    }
-
-    public override void start()
-    {
-        StartCoroutine("damageTarget");
     }
 
     // Update is called once per frame

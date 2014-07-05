@@ -13,6 +13,7 @@ public class LookAtEnemy : MonoBehaviour {
     public void setActiveTarget(Transform t)
     {
         target = t;
+        transform.LookAt(target);
     }
 
     public void reset(Vector3 pos)

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireTowerStats : TowerStats {
-
+public class EarthTowerStats : TowerStats {
 
     void Awake()
     {
@@ -13,7 +12,7 @@ public class FireTowerStats : TowerStats {
         armorPen = 0.2f;
         rank = 1;
         value = 100;
-        type = (int)Element.FIRE;
+        type = (int)Element.EARTH;
     }
 
     //############### LEVELUP ##########

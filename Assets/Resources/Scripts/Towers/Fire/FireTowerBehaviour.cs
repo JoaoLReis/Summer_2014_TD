@@ -8,7 +8,7 @@ public class FireTowerBehaviour : TowerBehaviour {
     void Awake()
     {
         inRange = new List<GameObject>();
-        damager = GetComponent<FireTowerDamage>();
+        damager = GetComponent<TowerDamage>();
         firing = false;
     }
 

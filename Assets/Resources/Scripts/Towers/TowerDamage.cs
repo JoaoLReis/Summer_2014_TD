@@ -9,7 +9,11 @@ public abstract class TowerDamage : Imports {
     protected EnemyStats target;
     protected bool stopped;
 
-    public abstract void start();
+    public void start()
+    {
+        if(stopped)
+          StartCoroutine("damageTarget");
+    }
 
     public void updateTarget(Transform t)
     {
