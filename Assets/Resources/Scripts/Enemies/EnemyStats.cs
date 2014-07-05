@@ -24,7 +24,7 @@ public abstract class EnemyStats : Imports {
 
 
 
-    //######################## INIT ####################
+    // INIT 
     protected void init()
     {
         vulnerability = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>().getVulnerability();
@@ -32,7 +32,11 @@ public abstract class EnemyStats : Imports {
         numEnemies = sizeOfEnemyTypes();
     }
 
-    //################# ATTACK SPEED ####################
+//##########################################
+//################ MODIFIERS ###############
+//##########################################
+
+    //############ ATTACK SPEED 
     public void increaseATKSpeed(float percentage)
     {
         atkSpeed = atkSpeed + atkSpeed * percentage;
@@ -43,7 +47,7 @@ public abstract class EnemyStats : Imports {
         atkSpeed = atkSpeed - atkSpeed * percentage;
     }
 
-    //################# MOVEMENT SPEED ####################
+    //############ MOVEMENT SPEED
     public void increaseMoveSpeed(float percentage)
     {
         atkSpeed = atkSpeed + atkSpeed * percentage;
@@ -54,14 +58,10 @@ public abstract class EnemyStats : Imports {
         atkSpeed = atkSpeed - atkSpeed * percentage;
     }
 
-    //################# HEALTH ###################
+    //############# HEALTH 
     public bool decreaseHealth(int num, float armPen, int type)
     {
-        Debug.Log("Type: " + this.type);
-        Debug.Log("DamagerType: " + type);
         int index = this.type * numElements + type;
-        Debug.Log("Index: " + index);
-        Debug.Log("tableValue: " + vulnerability[index]);
         health -= (int)((num - armor * (1 - armPen)) * vulnerability[index]);
         if(health < 1)
         {
@@ -77,7 +77,9 @@ public abstract class EnemyStats : Imports {
         health += num;
     }
 
-    //############### BUILDING DAMAGE ##########
+    public int getHealth() { return health; }
+
+    //############# BUILDING DAMAGE 
     public void increaseBuildingDamage(int num)
     {
         buildingDamage += num;
@@ -88,7 +90,7 @@ public abstract class EnemyStats : Imports {
         buildingDamage -= num;
     }
 
-    //############### DAMAGE ##########
+    //############# DAMAGE 
     public void increaseDamage(int num)
     {
         damage += num;
@@ -99,9 +101,16 @@ public abstract class EnemyStats : Imports {
         damage -= num;
     }
 
-    //############### LEVELUP ##########
+    //############# LEVELUP 
     public abstract void increaseRank();
 
-    //############### TYPE #############
+    //############# TYPE 
     public int getType() { return type; }
+
+
+//#################################################
+//################## UPDATES ######################
+//#################################################
+    
+    
 }

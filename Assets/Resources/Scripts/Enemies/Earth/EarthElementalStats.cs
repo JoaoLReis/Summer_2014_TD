@@ -46,11 +46,6 @@ public class EarthElementalStats : EnemyStats {
         }
     }
 
-    void OnGUI()
-    {
-        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position + transform.up*2);
-        GUI.Box(new Rect(pos.x, Screen.height - pos.y, 20, 5), "OLA");
-    }
 
 	// Update is called once per frame
 	void Update () {
