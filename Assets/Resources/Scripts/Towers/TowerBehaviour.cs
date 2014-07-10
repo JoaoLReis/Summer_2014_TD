@@ -32,7 +32,7 @@ public abstract class TowerBehaviour : Imports {
             inRange.Add(other.gameObject);
             if (inRange.Count == 1)
             {
-                enableFiring(other.transform);
+                StartCoroutine("enableFiring", other.transform);
             }
         }
     }
@@ -83,7 +83,6 @@ public abstract class TowerBehaviour : Imports {
     {
         if (target == null)
         {
-            Debug.Log("TARGET == NULL");
             inRange.RemoveAll(item => item == null);
             if (inRange.Count > 0)
             {
@@ -103,7 +102,6 @@ public abstract class TowerBehaviour : Imports {
     {
         if (target == null)
         {
-            Debug.Log("TARGET == NULL");
             inRange.RemoveAll(item => item == null);
             if (inRange.Count > 0)
             {
@@ -120,18 +118,22 @@ public abstract class TowerBehaviour : Imports {
         }
     }
 
-    protected void enableFiring(Transform t)
+    protected IEnumerator enableFiring(Transform t)
     {
-        Debug.Log("EnableFiring");
-        target = t;
-        aim.setActiveTarget(target);
-        aim.enabled = true;
-        currentWeapon.SetActive(true);
-        damager.updateTarget(target);
-        damager.enabled = true;
-        damager.start();
-        firing = true;
-        StartCoroutine("checkTarget");
+        do
+        {
+            Debug.Log("EnableFiring");
+            target = t;
+            aim.setActiveTarget(target);
+            aim.enabled = true;
+            currentWeapon.SetActive(true);
+            damager.updateTarget(target);
+            damager.enabled = true;
+            yield return new WaitForEndOfFrame();
+            damager.start();
+            firing = true;
+            StartCoroutine("checkTarget");
+        } while (false);
     }
 
     protected void disableFiring()

@@ -30,7 +30,7 @@ public class WaterTowerBehaviour : TowerBehaviour {
                 inRange.Add(other.gameObject);
                 if (inRange.Count == 1)
                 {
-                    enableFiring(other.transform);
+                    StartCoroutine("enableFiring", other.transform);
                 }
             }
         }

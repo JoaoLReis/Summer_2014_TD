@@ -31,7 +31,6 @@ public class FireTowerDamage : TowerDamage
                 tBehaviour.recalculateTarget();
             else if (target.decreaseHealth(1, stats.getArmorPen(), type))
             {
-                Debug.Log("RETURNED TRUE");
                 yield return new WaitForEndOfFrame();
                 tBehaviour.recalculateTarget();
             }

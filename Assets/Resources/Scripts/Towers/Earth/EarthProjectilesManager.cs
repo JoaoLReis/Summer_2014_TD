@@ -18,8 +18,8 @@ public class EarthProjectilesManager : MonoBehaviour {
 
     void Start()
     {
-        barrelEnd = FindChild("BarrelEnd");
-        rotator = GameObject.FindWithTag("Rotator").transform;
+        barrelEnd = FindChildWithTag("Weapon1");
+        rotator = FindChildWithTag("Rotator");
         GameObject bulletprefab = Resources.Load("Projectiles/EarthProjectile") as GameObject;
         for (int i = 0; i < 1; i++)
         {
@@ -36,11 +36,10 @@ public class EarthProjectilesManager : MonoBehaviour {
         firedbullets.Add(bullet);
         bullets.Remove(bullet);
         bullet.transform.position = barrelEnd.position;
-        bullet.transform.rotation = rotator.rotation;
         bullet.SetActive(true);
         bullet.rigidbody.velocity = Vector3.zero;
         bullet.rigidbody.angularVelocity = Vector3.zero;
-        bullet.rigidbody.AddForce(bullet.transform.forward * 50, ForceMode.Impulse);
+        bullet.rigidbody.AddForce(rotator.transform.forward * 50, ForceMode.Impulse);
         bullet.GetComponent<EarthProjectileDamage>().returnToManager();
     }
 
@@ -51,13 +50,13 @@ public class EarthProjectilesManager : MonoBehaviour {
         bullets.Add(bullet);
     }
 
-    protected Transform FindChild(string name)
+    protected Transform FindChildWithTag(string tag)
     {
         Transform[] trans = GetComponentsInChildren<Transform>(true);
 
         foreach (Transform t in trans)
         {
-            if (t.gameObject.name.Equals(name))
+            if (t.gameObject.tag.Equals(tag))
                 return t;
         }
         return null;
