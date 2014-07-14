@@ -4,13 +4,13 @@ using System.Collections;
 public class MoveTowardsObjective : MonoBehaviour {
 
     private NavMeshAgent agent;
-    private GlobalData data;
+    private GameManager gManager;
 
     private bool startMov; 
 
     void Awake()
     {
-        data = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>();
+        gManager = GameObject.FindWithTag("DataHolder").GetComponent<GameManager>();
         agent = GetComponent<NavMeshAgent>();
         startMov = true;
     }
@@ -21,7 +21,7 @@ public class MoveTowardsObjective : MonoBehaviour {
 	
     private void startMovement()
     {
-        agent.SetDestination(data.getRelay().transform.position);
+        agent.SetDestination(gManager.getRelay().transform.position);
     }
 
 	// Update is called once per frame

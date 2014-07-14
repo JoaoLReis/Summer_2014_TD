@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,11 @@ public abstract class TowerBehaviour : Imports {
     {
         if (other.gameObject.tag == "Enemy")
         {
-            inRange.Remove(target.gameObject);
+            try
+            {
+                inRange.Remove(target.gameObject);
+
+            
             if (target.gameObject == other.gameObject)
             {
                 if (inRange.Count > 0)
@@ -54,6 +59,11 @@ public abstract class TowerBehaviour : Imports {
                 {
                     disableFiring();
                 }
+            }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Something Went wrong -> trigger exit tower behaviour");
             }
         }
     }

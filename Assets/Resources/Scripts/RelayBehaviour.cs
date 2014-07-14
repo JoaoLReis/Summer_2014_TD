@@ -3,16 +3,16 @@ using System.Collections;
 
 public class RelayBehaviour : MonoBehaviour {
 
-    private GlobalData data;
+    private GameManager gManager;
 
     void Awake()
     {
-        data = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>();
+        gManager = GameObject.FindWithTag("DataHolder").GetComponent<GameManager>();
     }
 
     // Use this for initialization
 	void Start () {
-        data.addRelay(gameObject);
+        gManager.addRelay(gameObject);
 	}
 	
 	// Update is called once per frame

@@ -8,6 +8,8 @@ public abstract class EnemyStats : Imports {
     protected int numElements;
     protected int numEnemies;
 
+    private GameManager gManager;
+
     // BASE STATS
     protected int health;
     protected float damage;
@@ -27,6 +29,7 @@ public abstract class EnemyStats : Imports {
     // INIT 
     protected void init()
     {
+        gManager = GameObject.FindWithTag("DataHolder").GetComponent<GameManager>();
         vulnerability = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>().getVulnerability();
         numElements = sizeOfElements();
         numEnemies = sizeOfEnemyTypes();
@@ -66,7 +69,7 @@ public abstract class EnemyStats : Imports {
         if(health < 1)
         {
             //Atribuir valor ao jogador
-            Destroy(gameObject);
+            gManager.destroyEnemie(this.gameObject);
             return true;
         }
         return false;
