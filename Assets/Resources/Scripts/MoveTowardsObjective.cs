@@ -19,17 +19,9 @@ public class MoveTowardsObjective : MonoBehaviour {
 	void Start () {
 	}
 	
-    private void startMovement()
+    public void startMovement()
     {
         agent.SetDestination(gManager.getRelay().transform.position);
     }
 
-	// Update is called once per frame
-	void Update () {
-	    if(startMov)
-        {
-            startMov = false;
-            startMovement();
-        }
-	}
 }

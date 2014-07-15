@@ -81,7 +81,6 @@ public class LevelOne : Level {
     {
         enemyCounter = 0;
         data = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>();
-        enemies = data.enemies;
         enemyList = new List<GameObject>[numSpawners];
         indexList = new ArrayList[numSpawners];
         for(int i = 0; i < numSpawners; i++)
@@ -94,6 +93,7 @@ public class LevelOne : Level {
     // Use this for initialization
     void Start()
     {
+        enemies = data.enemies;
         for (int i = 0; i < numSpawners; i++)
             for (int k = 0; k < numWaves; k++)
             {
@@ -121,6 +121,12 @@ public class LevelOne : Level {
             //Number of enemies
             for (int l = 0; l < toBeSpawned[i, 0]; l++)
             {
+                foreach (int item in toBeSpawned)
+                {
+                    Debug.Log(item);
+                }
+                Debug.Log("LALALA: " + i + " and this crap: ");
+                Debug.Log("and this crap: " + toBeSpawned[i,1]);
                 GameObject it = Transform.Instantiate(enemies[toBeSpawned[i, 1] - 1], Vector3.zero, Quaternion.identity) as GameObject;
                 it.SetActive(false);
                 list.Add(it);

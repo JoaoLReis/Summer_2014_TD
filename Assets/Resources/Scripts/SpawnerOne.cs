@@ -119,6 +119,7 @@ public class SpawnerOne : Spawner {
                     break;
             }
             toSpawn.SetActive(true);
+            toSpawn.GetComponent<MoveTowardsObjective>().startMovement();
             yield return new WaitForSeconds(0.2f);
         }
         
