@@ -1,0 +1,467 @@
+fileFormatVersion: 2
+guid: 6cd9377766006c04b80ff6e2da5668f2
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Armature|Antena
+    100004: Armature|Arm
+    100006: Armature|Bone.001
+    100008: Armature|Bone.002
+    100010: Armature|Bone.003
+    100012: Armature|Bone.004
+    100014: Armature|Bone.005
+    100016: Armature|Bone.006
+    100018: Armature|Bone.007
+    100020: Armature|Bone.008
+    100022: Armature|Bone.009
+    100024: Armature|Bone.010
+    100026: Armature|Bone.011
+    100028: Armature|Bone.012
+    100030: Armature|Bone.013
+    100032: Armature|Bone.014
+    100034: Armature|Bone.015
+    100036: Armature|Bone.016
+    100038: Armature|Bone.017
+    100040: Armature|Bone.019
+    100042: Armature|Pelvis
+    100044: cube1_extract134_default
+    100046: //RootNode
+    100048: cube1_extract136_default
+    100050: Antena
+    100052: Arm
+    100054: Bone_001
+    100056: Bone_002
+    100058: Bone_003
+    100060: Bone_004
+    100062: Bone_005
+    100064: Bone_006
+    100066: Bone_007
+    100068: Bone_008
+    100070: Bone_009
+    100072: Bone_010
+    100074: Bone_011
+    100076: Bone_012
+    100078: Bone_013
+    100080: Bone_014
+    100082: Bone_015
+    100084: Bone_016
+    100086: Bone_017
+    100088: Bone_019
+    100090: Pelvis
+    400000: Armature
+    400002: Armature|Antena
+    400004: Armature|Arm
+    400006: Armature|Bone.001
+    400008: Armature|Bone.002
+    400010: Armature|Bone.003
+    400012: Armature|Bone.004
+    400014: Armature|Bone.005
+    400016: Armature|Bone.006
+    400018: Armature|Bone.007
+    400020: Armature|Bone.008
+    400022: Armature|Bone.009
+    400024: Armature|Bone.010
+    400026: Armature|Bone.011
+    400028: Armature|Bone.012
+    400030: Armature|Bone.013
+    400032: Armature|Bone.014
+    400034: Armature|Bone.015
+    400036: Armature|Bone.016
+    400038: Armature|Bone.017
+    400040: Armature|Bone.019
+    400042: Armature|Pelvis
+    400044: cube1_extract134_default
+    400046: //RootNode
+    400048: cube1_extract136_default
+    400050: Antena
+    400052: Arm
+    400054: Bone_001
+    400056: Bone_002
+    400058: Bone_003
+    400060: Bone_004
+    400062: Bone_005
+    400064: Bone_006
+    400066: Bone_007
+    400068: Bone_008
+    400070: Bone_009
+    400072: Bone_010
+    400074: Bone_011
+    400076: Bone_012
+    400078: Bone_013
+    400080: Bone_014
+    400082: Bone_015
+    400084: Bone_016
+    400086: Bone_017
+    400088: Bone_019
+    400090: Pelvis
+    2300000: cube1_extract136_default
+    3300000: cube1_extract136_default
+    4300000: cube1_extract134_default
+    4300002: cube1_extract136_default
+    7400000: Armature|jump
+    7400002: Armature|Move
+    7400004: Armature|Idle
+    7400006: Idle
+    7400008: Idle2
+    7400010: Idle2_001
+    7400012: jump
+    7400014: Move
+    7400016: Move_001
+    7400018: Move_002
+    7400020: Move0
+    9500000: //RootNode
+    13700000: cube1_extract134_default
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths:
+    - Armature/Bone_001/Bone_005/Bone_009
+    - Armature/Bone_002/Bone_006/Bone_010
+    - Armature/Bone_003/Bone_007/Bone_011
+    - Armature/Bone_004/Bone_008/Bone_012
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Idle
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone_001
+        weight: 1
+      - path: Armature/Bone_001/Bone_005
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009/Bone_013
+        weight: 1
+      - path: Armature/Bone_002
+        weight: 1
+      - path: Armature/Bone_002/Bone_006
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010/Bone_014
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_007
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011/Bone_015
+        weight: 1
+      - path: Armature/Bone_004
+        weight: 1
+      - path: Armature/Bone_004/Bone_008
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012/Bone_016
+        weight: 1
+      - path: Armature/Pelvis
+        weight: 1
+      - path: Armature/Pelvis/Arm
+        weight: 1
+      - path: Armature/Pelvis/Bone_017
+        weight: 1
+      - path: Armature/Pelvis/Bone_017/Antena
+        weight: 1
+      - path: Armature/Pelvis/Bone_019
+        weight: 1
+      - path: cube1_extract134_default
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Idle2
+      takeName: Idle2
+      firstFrame: -1
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone_001
+        weight: 1
+      - path: Armature/Bone_001/Bone_005
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009/Bone_013
+        weight: 1
+      - path: Armature/Bone_002
+        weight: 1
+      - path: Armature/Bone_002/Bone_006
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010/Bone_014
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_007
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011/Bone_015
+        weight: 1
+      - path: Armature/Bone_004
+        weight: 1
+      - path: Armature/Bone_004/Bone_008
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012/Bone_016
+        weight: 1
+      - path: Armature/Pelvis
+        weight: 1
+      - path: Armature/Pelvis/Arm
+        weight: 1
+      - path: Armature/Pelvis/Bone_017
+        weight: 1
+      - path: Armature/Pelvis/Bone_017/Antena
+        weight: 1
+      - path: Armature/Pelvis/Bone_019
+        weight: 1
+      - path: cube1_extract134_default
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: jump
+      takeName: jump
+      firstFrame: 5
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone_001
+        weight: 1
+      - path: Armature/Bone_001/Bone_005
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009/Bone_013
+        weight: 1
+      - path: Armature/Bone_002
+        weight: 1
+      - path: Armature/Bone_002/Bone_006
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010/Bone_014
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_007
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011/Bone_015
+        weight: 1
+      - path: Armature/Bone_004
+        weight: 1
+      - path: Armature/Bone_004/Bone_008
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012/Bone_016
+        weight: 1
+      - path: Armature/Pelvis
+        weight: 1
+      - path: Armature/Pelvis/Arm
+        weight: 1
+      - path: Armature/Pelvis/Bone_017
+        weight: 1
+      - path: Armature/Pelvis/Bone_017/Antena
+        weight: 1
+      - path: Armature/Pelvis/Bone_019
+        weight: 1
+      - path: cube1_extract134_default
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Move
+      takeName: Move
+      firstFrame: 5
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone_001
+        weight: 1
+      - path: Armature/Bone_001/Bone_005
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009
+        weight: 1
+      - path: Armature/Bone_001/Bone_005/Bone_009/Bone_013
+        weight: 1
+      - path: Armature/Bone_002
+        weight: 1
+      - path: Armature/Bone_002/Bone_006
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010
+        weight: 1
+      - path: Armature/Bone_002/Bone_006/Bone_010/Bone_014
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_007
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011
+        weight: 1
+      - path: Armature/Bone_003/Bone_007/Bone_011/Bone_015
+        weight: 1
+      - path: Armature/Bone_004
+        weight: 1
+      - path: Armature/Bone_004/Bone_008
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012
+        weight: 1
+      - path: Armature/Bone_004/Bone_008/Bone_012/Bone_016
+        weight: 1
+      - path: Armature/Pelvis
+        weight: 1
+      - path: Armature/Pelvis/Arm
+        weight: 1
+      - path: Armature/Pelvis/Bone_017
+        weight: 1
+      - path: Armature/Pelvis/Bone_017/Antena
+        weight: 1
+      - path: Armature/Pelvis/Bone_019
+        weight: 1
+      - path: cube1_extract134_default
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .300000012
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
