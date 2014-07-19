@@ -23,6 +23,11 @@ public class HexTileMap : MonoBehaviour
         game = GameObject.Find("Game").GetComponent<GameState>();
     }
 
+    void Update()
+    {
+
+    }
+
     #region Hex Functions
         public void updateHex(Hex changeTo)
         {

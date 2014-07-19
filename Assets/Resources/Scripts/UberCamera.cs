@@ -5,8 +5,11 @@ public class UberCamera : MonoBehaviour
 { 
 	public float smooth = 3f;		// a public variable to adjust smoothing of camera motion
     public bool lookForward = true;
-    public bool jumping;
+    public bool jumping = false;
 
+    private bool lookatbuild = false;
+
+    Transform selectedHex;
     Transform standardTransform;			// the usual position for the camera, specified by a transform in the game when moving forward
     Transform lookAtTransform;			// the position to move the camera to when using head look when moving forward
     Transform secondaryTransform;           // the secondary position for the camera when the character is moving backwards
@@ -34,7 +37,7 @@ public class UberCamera : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		if(lookAtTransform)
+        if (!lookatbuild)
 		{
             if (lookForward)
             {
@@ -70,11 +73,48 @@ public class UberCamera : MonoBehaviour
             //transform.LookAt(lookAtPos);
 		}
 		else
-		{	
-			// return the camera to standard position and direction
-            transform.position = Vector3.Lerp(transform.position, standardTransform.position, Time.deltaTime * smooth);
-            transform.forward = Vector3.Lerp(transform.forward, standardTransform.forward, Time.deltaTime * smooth);
-		}
-		
+		{
+            if (lookForward)
+            {
+                // lerp the camera position to the look at position, and lerp its forward direction to match 
+                transform.position = Vector3.Lerp(transform.position, standardTransform.position, Time.deltaTime * smooth);
+                //transform.forward = Vector3.Lerp(transform.forward, lookAtPos.forward, Time.deltaTime * smooth);
+                if (!jumping)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation((selectedHex.position - transform.position).normalized);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smooth * 10.0f);
+                }
+                else
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation((selectedHex.position - transform.position).normalized);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smooth * 6.0f);
+                }
+            }
+            else
+            {
+                // lerp the camera position 
+                transform.position = Vector3.Lerp(transform.position, secondaryTransform.position, Time.deltaTime * smooth);
+                if (!jumping)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation((selectedHex.position - transform.position).normalized);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smooth * 10.0f);
+                }
+                else
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation((selectedHex.position - transform.position).normalized);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smooth * 6.0f);
+                }
+            }
+		}	
 	}
+
+    public void SetSelectedHex(Transform hex)
+    {
+        selectedHex = hex;
+    }
+
+    public void SetLookatBuild(bool val)
+    {
+        lookatbuild = val;
+    }
 }
