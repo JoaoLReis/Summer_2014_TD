@@ -43,6 +43,64 @@ public class HexTileMap : MonoBehaviour
             Debug.Log("****end2****");*/
         }
 
+        //Function to be invoked at game runtime
+        public Hex RuntimeHexFromWorld()
+        {
+            var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 400.0f))
+            {
+                //Debug.DrawLine(hit.point, ray.origin , Color.red);
+                //Debug.Log(hit.point);
+                //Instantiate (particle, hit.point, transform.rotation); // Create a particle if hit
+            }
+
+            checkedHexes.Clear();
+            var mousePosition = hit.point;
+            
+            //Debug.Log(mousePosition);
+            //Debug.Log(hit.point);
+            float ix = mousePosition.z;
+            float iy = mousePosition.x;
+
+            var col_guess = Mathf.RoundToInt(ix / tileSize);
+            var row_guess = Mathf.RoundToInt(iy / xOffset);
+            Hex closest = new Hex(new Vector3(float.MaxValue, float.MaxValue, float.MaxValue), 0, 0);
+            int fx = 0;
+            int fz = 0;
+            int hexChecks = 0;
+            for (int z = col_guess - 1; z <= col_guess + 1; z++)
+            {
+                for (int x = row_guess - 1; x <= row_guess + 1; x++)
+                {
+                    //we dont work with negatives and must be carefull with the gridsize
+                    if (x >= 0f && z >= 0f && x <= gridSize && z <= gridSize)
+                    {
+                        var index = x * gridSize + z;
+                        if (index < Hexes.Length)
+                        {
+                            checkedHexes.Add(Hexes[index]);
+                            hexChecks++;
+
+                            if (Vector3.Distance(Hexes[index].position, mousePosition) < Vector3.Distance(closest.position, mousePosition))
+                            {
+                                fx = x;
+                                fz = z;
+                                closest = Hexes[index];
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (closest.instance != null)
+            {
+                selectedTile = closest;
+                return closest;
+            }
+            else return null;              
+        }
+
         public Hex HexFromWorld(Vector3 mousePosition)
         {
             float ix = mousePosition.z;
