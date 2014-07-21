@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 public class SpawnerOne : Spawner {
 
-    private const int numSpawners = 4;
-    private const int numWaves = 10;
+    private GameManager gManager;
+    private Level level;
+
+    private int numSpawners;
+    private int numWaves;
 
     //Positions of spawning
     private Transform[] spawns;
@@ -31,6 +34,16 @@ public class SpawnerOne : Spawner {
         levelDuration = 300f;
         timeToStart = 5;
         deltaTime = levelDuration / numWaves;
+    }
+
+    void Start()
+    {
+        gManager = GetComponent<GameManager>();
+        level = GetComponent<Level>();
+
+        numSpawners = level.getNumSpawners();
+        numWaves = level.getNumWaves();
+
         UnityEngine.Object[] spawners = GameObject.FindGameObjectsWithTag("Spawn");
         spawns = new Transform[numSpawners];
         spawns[0] = ((GameObject)spawners[0]).transform;
@@ -43,7 +56,7 @@ public class SpawnerOne : Spawner {
         pos3 = new Vector3[numSpawners];
         pos4 = new Vector3[numSpawners];
 
-        for (int i = 0; i < numSpawners; i++ )
+        for (int i = 0; i < numSpawners; i++)
         {
             pos1[i] = spawns[i].position + spawns[i].right * 1;
             pos2[i] = spawns[i].position + spawns[i].right * -1;
@@ -87,6 +100,7 @@ public class SpawnerOne : Spawner {
             StartCoroutine("spawnerSpawn", i);
         }
         currentWave++;
+        gManager.increaseWave();
     }
 
     private IEnumerator spawnerSpawn(int spawner)

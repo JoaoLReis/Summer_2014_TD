@@ -69,7 +69,7 @@ public abstract class EnemyStats : Imports {
         if(health < 1)
         {
             //Atribuir valor ao jogador
-            gManager.destroyEnemie(this.gameObject);
+            gManager.destroyEnemy(this.gameObject);
             return true;
         }
         return false;

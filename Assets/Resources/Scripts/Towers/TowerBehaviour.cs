@@ -132,7 +132,6 @@ public abstract class TowerBehaviour : Imports {
     {
         do
         {
-            Debug.Log("EnableFiring");
             target = t;
             aim.setActiveTarget(target);
             aim.enabled = true;

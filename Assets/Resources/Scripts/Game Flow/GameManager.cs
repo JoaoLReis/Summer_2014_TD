@@ -5,6 +5,9 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour {
 
+    private UIAndStats uiStats;
+
+    //Level
     public int currentLevel;
     private int relaysNumber;
     private List<GameObject> relays;
@@ -12,6 +15,13 @@ public class GameManager : MonoBehaviour {
     private ArrayList[] enemyIndex; 
     private Level level;
     private Spawner spawner;
+
+
+    //PlayerStats
+    private int gold;
+    private int score;
+    private int currentWave;
+
 
     //#####################################################
     //
@@ -34,6 +44,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        uiStats = GetComponent<UIAndStats>();
         StartCoroutine("finalize");
     }
 
@@ -73,8 +84,29 @@ public class GameManager : MonoBehaviour {
         return relays.First();
     }
 
-    public void destroyEnemie(GameObject o)
+    public void destroyEnemy(GameObject o)
     {
+        int enemyvalue = o.GetComponent<EnemyStats>().value;
+        increaseGold(enemyvalue);
+        increaseScore(enemyvalue);
         Destroy(o);
+    }
+
+    private void increaseGold(int amount)
+    {
+        gold += amount;
+        uiStats.updateGold(gold);
+    }
+
+    private void increaseScore(int amount)
+    {
+        score += amount;
+        uiStats.updateScore(score);
+    }
+
+    public void increaseWave()
+    {
+        currentWave++;
+        uiStats.updateWave(currentWave);
     }
 }

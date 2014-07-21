@@ -16,11 +16,11 @@ public class UberUi : MonoBehaviour {
 
         GUILayout.BeginHorizontal();
 
-        if(GUILayout.RepeatButton("Tower"))
-        {
-            //Enter build mode.
+        //if(GUILayout.RepeatButton("Tower"))
+        //{
+        //    //Enter build mode.
 
-        }
+        //}
 
         GUILayout.BeginVertical();
 

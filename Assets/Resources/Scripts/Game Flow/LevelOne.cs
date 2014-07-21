@@ -121,12 +121,6 @@ public class LevelOne : Level {
             //Number of enemies
             for (int l = 0; l < toBeSpawned[i, 0]; l++)
             {
-                foreach (int item in toBeSpawned)
-                {
-                    Debug.Log(item);
-                }
-                Debug.Log("LALALA: " + i + " and this crap: ");
-                Debug.Log("and this crap: " + toBeSpawned[i,1]);
                 GameObject it = Transform.Instantiate(enemies[toBeSpawned[i, 1] - 1], Vector3.zero, Quaternion.identity) as GameObject;
                 it.SetActive(false);
                 list.Add(it);
@@ -134,6 +128,16 @@ public class LevelOne : Level {
         }
         enemyCounter = list.Count;
         return list;
+    }
+
+    public override int getNumWaves()
+    {
+        return numWaves;
+    }
+
+    public override int getNumSpawners()
+    {
+        return numSpawners;
     }
 
 }

@@ -8,5 +8,8 @@ public abstract class Level : MonoBehaviour {
 
     public abstract ArrayList[] getIndexList();
 
+    public abstract int getNumWaves();
+
+    public abstract int getNumSpawners();
 
 }

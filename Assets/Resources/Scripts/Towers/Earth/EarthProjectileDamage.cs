@@ -29,13 +29,13 @@ public class EarthProjectileDamage : Imports {
         manager.reaquireBullet(gameObject);
     }
 	
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Enemy")
         {
             other.gameObject.GetComponent<EnemyStats>().decreaseHealth(damage, armorPen, type);
+            gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);
     }
 
 	// Update is called once per frame
