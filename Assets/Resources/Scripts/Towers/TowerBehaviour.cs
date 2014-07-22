@@ -40,30 +40,43 @@ public abstract class TowerBehaviour : Imports {
 
     protected void OnTriggerExit(Collider other)
     {
+        //Debug.Log("Break1: " + gameObject.name);
+        //Debug.Log("Break1.2: " + other.name);
         if (other.gameObject.tag == "Enemy")
         {
             try
             {
+                //Debug.Log("Break2: " + gameObject.name);
+                //Debug.Log("Break2.2: " + other.name);
+                //Debug.Break();
                 inRange.Remove(target.gameObject);
 
             
             if (target.gameObject == other.gameObject)
             {
+                //Debug.Log("Break3: " + gameObject.name);
+                //Debug.Break();
                 if (inRange.Count > 0)
                 {
+                    //Debug.Log("Break4: " + gameObject.name);
+                    //Debug.Break();
                     target = inRange.First().transform;
                     aim.setActiveTarget(target);
                     damager.updateTarget(target);
+                    //Debug.Log("Break5: " + gameObject.name);
+                    //Debug.Break();
                 }
                 else
                 {
+                    //Debug.Log("Break6: " + gameObject.name);
+                    //Debug.Break();
                     disableFiring();
                 }
             }
             }
             catch (Exception e)
             {
-                Debug.Log("Something Went wrong -> trigger exit tower behaviour");
+                Debug.Log("Something Went wrong -> trigger exit tower behaviour: " + "This:" + gameObject.name + "Other: " + other.name);
             }
         }
     }
