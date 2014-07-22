@@ -60,7 +60,7 @@ public class UberBuildMenu : MonoBehaviour {
         state = State.Hidden;
     }
 
-    public void Instantiate(Transform tower)
+    public void Instantiate(GameObject tower)
     {
         Debug.Log("instantiating---!!!");
         Instantiate(tower, transform.position, Quaternion.identity);

@@ -33,7 +33,6 @@ public class SpawnerOne : Spawner {
         currentWave = 0;
         levelDuration = 300f;
         timeToStart = 5;
-        deltaTime = levelDuration / numWaves;
     }
 
     void Start()
@@ -43,6 +42,7 @@ public class SpawnerOne : Spawner {
 
         numSpawners = level.getNumSpawners();
         numWaves = level.getNumWaves();
+        deltaTime = levelDuration / numWaves;
 
         UnityEngine.Object[] spawners = GameObject.FindGameObjectsWithTag("Spawn");
         spawns = new Transform[numSpawners];

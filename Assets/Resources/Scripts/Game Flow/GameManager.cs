@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     private int gold;
     private int score;
     private int currentWave;
+    private int lives;
 
 
     //#####################################################
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         uiStats = GetComponent<UIAndStats>();
+        lives = level.getNumLives();
         StartCoroutine("finalize");
     }
 

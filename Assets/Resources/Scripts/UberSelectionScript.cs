@@ -3,7 +3,7 @@ using System.Collections;
 
 public class UberSelectionScript : MonoBehaviour {
 
-    public Transform tower;
+    public GameObject tower;
     private UberBuildMenu buildMenuScript;
     private Color color;
 

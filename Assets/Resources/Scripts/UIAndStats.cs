@@ -6,9 +6,13 @@ public class UIAndStats : MonoBehaviour {
     private GameManager gManager;
     private Level level;
     private GUISkin skin;
+
+    //Textures
     private Texture2D play;
     private Texture2D faster;
     private Texture2D fastest;
+    private Texture2D coin;
+    private Texture2D life;
     
     //Player Stats
     private int score;
@@ -31,6 +35,8 @@ public class UIAndStats : MonoBehaviour {
     private float quarterHeight;
     private float fifthWidth;
     private float fifthHeight;
+    private float fourFifthWidth;
+    private float fourFifthHeight;
     private float sixthWidth;
     private float sixthHeight;
     private float ninthWidth;
@@ -56,7 +62,6 @@ public class UIAndStats : MonoBehaviour {
     {
         skin = Resources.Load("Skins/GeneralUI") as GUISkin;
         score = 0;
-        lives = 0;
         currentWave = 0;
         gold = 0;
 
@@ -73,6 +78,8 @@ public class UIAndStats : MonoBehaviour {
         quarterHeight = height / 4;
         fifthWidth = width / 5;
         fifthHeight = height / 5;
+        fourFifthWidth = width * 4 / 5;
+        fourFifthHeight = height * 4 / 5;
         sixthWidth = width / 6;
         sixthHeight = height / 6;
         ninthWidth = width / 9;
@@ -99,7 +106,7 @@ public class UIAndStats : MonoBehaviour {
     {
         gManager = GetComponent<GameManager>();
         level = GetComponent<Level>();
-
+        lives = level.getNumLives();
         maxWaves = level.getNumWaves();
 
         if (wideScreen)
@@ -114,26 +121,28 @@ public class UIAndStats : MonoBehaviour {
             faster = Resources.Load("Textures/GameSpeed/4x3/Faster") as Texture2D;
             fastest = Resources.Load("Textures/GameSpeed/4x3/Fastest") as Texture2D;
         }
+        coin = Resources.Load("Textures/Stats/Gold") as Texture2D;
+        life = Resources.Load("Textures/Stats/Life") as Texture2D;
     }
 
     void OnGUI()
     {
-        //Score
+        //SCORE
         GUI.BeginGroup(new Rect(0, 0, tenthWidth, twentiethHeight));
 
         GUI.Box(new Rect(0, 0, tenthWidth, twentiethHeight), "Score: " + score, skin.box);
 
         GUI.EndGroup();
 
-        //Game Speed + Waves
+        //GAME SPEED + WAVES
         GUI.BeginGroup(new Rect(halfWidth - tenthWidth, 0, quarterWidth, tenthHeight));
 
-        //Call next Wave
+        //CALL NEXT WAVE
         if (GUI.Button(new Rect(0, 0, twentiethWidth, tenthHeight), "Next Wave", skin.button))
         {
         }
 
-        //Speed buttons and wave info
+        //SPEED BUTTONS AND WAVE INFO
         GUI.BeginGroup(new Rect(twentiethWidth, 0, fifthWidth, tenthHeight));
         if (GUI.Button(new Rect(0, 0, twentiethWidth, twentiethHeight), play, skin.button))
         {
@@ -153,11 +162,17 @@ public class UIAndStats : MonoBehaviour {
         GUI.Box(new Rect(0, twentiethHeight, fifthWidth, twentiethHeight), "Wave: " + currentWave + " / " + maxWaves, skin.box);
 
         GUI.EndGroup();
-
-
         GUI.EndGroup();
 
-        GUI.Box(new Rect(nineTenthWidth, 0, tenthWidth, twentiethHeight), "Gold: " + gold, skin.box);
+        //STATS
+        GUI.BeginGroup(new Rect(fourFifthWidth, 0, fifthWidth, twentiethHeight));
+        
+        GUI.Box(new Rect(0, 0, twentiethHeight, twentiethHeight), coin, skin.box);
+        GUI.Box(new Rect(twentiethHeight, 0, tenthWidth - twentiethHeight, twentiethHeight), "" + gold, skin.box);
+
+        GUI.Box(new Rect(tenthWidth, 0, twentiethHeight, twentiethHeight), life, skin.box);
+        GUI.Box(new Rect(tenthWidth + twentiethHeight, 0, tenthWidth - twentiethHeight, twentiethHeight), "" + lives, skin.box);
+        GUI.EndGroup();
 
     }
 
