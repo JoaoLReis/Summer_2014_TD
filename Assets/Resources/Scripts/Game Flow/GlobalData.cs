@@ -24,6 +24,10 @@ public class GlobalData : MonoBehaviour{
     /*                        WIND      /**/    1.5f,  /**/        3,     /**/      1      /**/
     };
 
+    private int[] priceTable = { 
+    /*              FIRE        /**/    100,
+    /*              EARTH       /**/    100,
+    /*              WATER       /**/    100 };
 
     // #################################################
     // #################### METHODS ####################
@@ -39,6 +43,11 @@ public class GlobalData : MonoBehaviour{
     public float[] getVulnerability()
     {
         return vulnerability;
+    }
+
+    public int[] getPriceTable()
+    {
+        return priceTable;
     }
     
 }

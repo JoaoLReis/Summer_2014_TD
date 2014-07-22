@@ -9,6 +9,7 @@ public class LevelOne : Level {
     private const int numSpawners = 4;
     private const int numWaves = 10;
     private const int numLives = 20;
+    private const int startGold = 250;
 
     //
     public Wave[][] levelSpawn = new Wave[numSpawners][]{ 
@@ -144,6 +145,11 @@ public class LevelOne : Level {
     public override int getNumLives()
     {
         return numLives;
+    }
+
+    public override int getGold()
+    {
+        return startGold;
     }
 
 }

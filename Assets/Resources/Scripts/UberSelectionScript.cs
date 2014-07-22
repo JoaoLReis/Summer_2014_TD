@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UberSelectionScript : MonoBehaviour {
+public abstract class UberSelectionScript : Imports {
 
-    public GameObject tower;
-    private UberBuildMenu buildMenuScript;
-    private Color color;
+    protected GameObject tower;
+    protected GameManager gManager;
+    protected GlobalData data;
+    protected UberBuildMenu buildMenuScript;
+    protected Color color;
+    protected int towerValue;
 
-    void Start()
-    {
-        color = renderer.material.color;
-        buildMenuScript = GameObject.Find("BuildMenu").GetComponent<UberBuildMenu>();
-    }
 
     void OnMouseEnter()
     {
@@ -25,7 +23,25 @@ public class UberSelectionScript : MonoBehaviour {
 
     void OnMouseDown()
     {
+        if (gManager.getGold() > towerValue)
+        {
+            renderer.material.color = color;
+            buildMenuScript.Instantiate(tower);
+        }
+        else
+        {
+            notEnoughMoney();
+        }
+    }
+
+    private void notEnoughMoney()
+    {
+        renderer.material.color = Color.red;
+        Invoke("restore", 0.5f);
+    }
+
+    private void restore()
+    {
         renderer.material.color = color;
-        buildMenuScript.Instantiate(tower);
     }
 }

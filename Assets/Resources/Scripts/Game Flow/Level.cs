@@ -13,4 +13,6 @@ public abstract class Level : MonoBehaviour {
     public abstract int getNumSpawners();
 
     public abstract int getNumLives();
+
+    public abstract int getGold();
 }

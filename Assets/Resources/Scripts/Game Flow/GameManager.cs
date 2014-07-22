@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour {
     {
         uiStats = GetComponent<UIAndStats>();
         lives = level.getNumLives();
+        gold = level.getGold();
         StartCoroutine("finalize");
     }
 
@@ -89,18 +90,18 @@ public class GameManager : MonoBehaviour {
     public void destroyEnemy(GameObject o)
     {
         int enemyvalue = o.GetComponent<EnemyStats>().value;
-        increaseGold(enemyvalue);
-        increaseScore(enemyvalue);
+        updateGold(enemyvalue);
+        updateScore(enemyvalue);
         Destroy(o);
     }
 
-    private void increaseGold(int amount)
+    private void updateGold(int amount)
     {
         gold += amount;
         uiStats.updateGold(gold);
     }
 
-    private void increaseScore(int amount)
+    private void updateScore(int amount)
     {
         score += amount;
         uiStats.updateScore(score);
@@ -110,5 +111,16 @@ public class GameManager : MonoBehaviour {
     {
         currentWave++;
         uiStats.updateWave(currentWave);
+    }
+
+    public int getGold()
+    {
+        return gold;
+    }
+
+    public void createdTower(GameObject tower)
+    {
+        int value = tower.GetComponent<TowerStats>().getValue();
+        updateGold(-value);
     }
 }

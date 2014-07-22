@@ -11,7 +11,7 @@ public abstract class TowerStats : Imports {
     protected float armorPen;
     protected int rank;
     protected int type;
-    public int value;
+    protected int value;
 
     //#################  SPEED ####################
     public void increaseSpeed(float percentage)
@@ -84,6 +84,11 @@ public abstract class TowerStats : Imports {
     public int getType()
     {
         return type;
+    }
+
+    public int getValue()
+    {
+        return value;
     }
 
 }

@@ -5,6 +5,7 @@ public class UberBuildMenu : MonoBehaviour {
 
     public enum State { Hidden, Regular, Built };
     private State state;
+    private GameManager gManager;
     private Transform player;
     private Transform Built, Regular, greenArea;
     
@@ -18,6 +19,7 @@ public class UberBuildMenu : MonoBehaviour {
         Regular.gameObject.SetActive(false);
         Built.gameObject.SetActive(false);
         state = State.Hidden;
+        gManager = GameObject.FindWithTag("DataHolder").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -63,6 +65,6 @@ public class UberBuildMenu : MonoBehaviour {
     public void Instantiate(GameObject tower)
     {
         Debug.Log("instantiating---!!!");
-        Instantiate(tower, transform.position, Quaternion.identity);
+        gManager.createdTower(Instantiate(tower, transform.position, Quaternion.identity) as GameObject);
     }
 }

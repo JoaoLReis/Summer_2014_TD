@@ -63,7 +63,6 @@ public class UIAndStats : MonoBehaviour {
         skin = Resources.Load("Skins/GeneralUI") as GUISkin;
         score = 0;
         currentWave = 0;
-        gold = 0;
 
         ratio = (float)Screen.width / (float)Screen.height;
         wideScreen = ratio > 1.5f ? true : false;
@@ -108,6 +107,7 @@ public class UIAndStats : MonoBehaviour {
         level = GetComponent<Level>();
         lives = level.getNumLives();
         maxWaves = level.getNumWaves();
+        gold = level.getGold();
 
         if (wideScreen)
         {
