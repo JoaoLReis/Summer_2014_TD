@@ -12,9 +12,8 @@ public class UberBotControlScript : MonoBehaviour
 	//public bool useCurves;						// a setting for teaching purposes to show use of curves
     public float runSpeed = 3.0f;               
     public float rotationSpeed = 7.0f;
-    public float jumpSpeed = 0.5f;
-    public float jumpIncrement = 0.2f;
-    public float maxJumpSpeed = 8.0f;
+    public float jumpSpeed = 0.2f;
+    public float jumpIncrement = -0.01f;
 
 	private Animator anim;							// a reference to the animator on the character
 	private AnimatorStateInfo currentBaseState;	    // a reference to the current state of the animator, used for base layer
@@ -31,7 +30,8 @@ public class UberBotControlScript : MonoBehaviour
     private GameObject jetpack;
     private Transform buildMenu;
     private UberBuildMenu buildMenuScript;
-    private float currentJumpSpeed;
+    public float currentJumpSpeed = 0.0f;
+    public float currentJumpIncrement = 0.0f;
 
 	static int jumpState = Animator.StringToHash("Base Layer.Jump");				// and are used to check state for various actions to occur
 
@@ -53,7 +53,6 @@ public class UberBotControlScript : MonoBehaviour
         buildMode = false;
         selectMode = false;
         curNormal = Vector3.up;
-        currentJumpSpeed = 0.0f;
 		//enemy = GameObject.Find("Enemy").transform;	
 		if(anim.layerCount ==2)
 			anim.SetLayerWeight(1, 1);
@@ -157,40 +156,54 @@ public class UberBotControlScript : MonoBehaviour
             Vector3 newPosition = transform.position;
             newPosition += transform.forward * anim.GetFloat("Speed")*2.0f * runSpeed * Time.deltaTime;
             transform.position = newPosition;
+        }
+    }
 
-            //Jump
-            if (anim.GetBool("Jump"))
+    void FixedUpdate()
+    {
+        //Jump
+        if (anim.GetBool("Jump"))
+        {
+            if (currentJumpSpeed > 1.0f)
             {
-                if (currentJumpSpeed <= maxJumpSpeed)
-                {
-                    currentJumpSpeed += jumpSpeed;
-                    jumpSpeed += jumpIncrement;
-                }
+                Debug.Log("jumping");
+                currentJumpSpeed += currentJumpIncrement;
+                currentJumpIncrement += jumpIncrement;
+                rigidbody.velocity = Vector3.up * 5 * currentJumpSpeed * rigidbody.mass * Time.deltaTime;
             }
             else
             {
-                /*RaycastHit hit;
-                if (Physics.Raycast(transform.position, -transform.up, out hit)) //- [ out hit ? ]
-                {
-                    if (hit.distance < 1.75f)
-                        currentJumpSpeed = 0.0f;
-                    else
-                    {
-                        currentJumpSpeed -= jumpIncrement;
-                        if (currentJumpSpeed < 0.0f)
-                            currentJumpSpeed = 0.0f;
-                    }
-                }
+                rigidbody.velocity = Vector3.zero;
+                //rigidbody.AddForce(-Vector3.up * 20 * currentJumpSpeed * rigidbody.mass);
+                Debug.Log("test");
+                currentJumpSpeed = 0.0f;
+                //rigidbody.AddForce(Vector3.up * 20 * rigidbody.mass);
+            }
+        }
+        else
+        {
+            /*RaycastHit hit;
+            if (Physics.Raycast(transform.position, -transform.up, out hit)) //- [ out hit ? ]
+            {
+                if (hit.distance < 1.75f)
+                    currentJumpSpeed = 0.0f;
                 else
-                {*/
-                    currentJumpSpeed -= jumpSpeed;
+                {
+                    currentJumpSpeed -= jumpIncrement;
                     if (currentJumpSpeed < 0.0f)
                         currentJumpSpeed = 0.0f;
-                //}
+                }
             }
-            newPosition += transform.up * currentJumpSpeed * Time.deltaTime;
-            transform.position = newPosition;
+            else
+            {*/
+            rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
+            //Gravity
+            //rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
+            //}
         }
+
+        //newPosition += transform.up * currentJumpSpeed * Time.deltaTime;
+        //transform.position = newPosition;
     }
 	
 	void Update ()
@@ -212,6 +225,8 @@ public class UberBotControlScript : MonoBehaviour
 
             if (Input.GetButtonDown("Jump"))
             {
+                currentJumpIncrement = jumpIncrement;
+                currentJumpSpeed = jumpSpeed;
                 jetpack.SetActive(true);
                 anim.SetBool("Jump", true);
                 cameraScript.jumping = true;
