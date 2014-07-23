@@ -5,7 +5,12 @@ public class UIAndStats : MonoBehaviour {
 
     private GameManager gManager;
     private Level level;
-    private GUISkin skin;
+    private GUISkin uiSkin;
+    private GUISkin menuSkin;
+
+    private bool paused;
+    private float gameSpeed;
+    private bool muted;
 
     //Textures
     private Texture2D play;
@@ -13,6 +18,9 @@ public class UIAndStats : MonoBehaviour {
     private Texture2D fastest;
     private Texture2D coin;
     private Texture2D life;
+    private Texture2D pause;
+    private Texture2D noSound;
+    private Texture2D sound;
     
     //Player Stats
     private int score;
@@ -51,6 +59,8 @@ public class UIAndStats : MonoBehaviour {
     private float fifteenthHeight;
     private float twoFifteenthWidth;
     private float twoFifteenthHeight;
+    private float ftFifteenWidth;
+    private float ftFifteenHeight;
     private float twentiethWidth;
     private float twentiethHeight;
     private float nineTenthWidth;
@@ -60,9 +70,13 @@ public class UIAndStats : MonoBehaviour {
 
     void Awake()
     {
-        skin = Resources.Load("Skins/GeneralUI") as GUISkin;
+        uiSkin = Resources.Load("Skins/GeneralUI") as GUISkin;
+        menuSkin = Resources.Load("Skins/InGameMenu") as GUISkin;
         score = 0;
         currentWave = 0;
+        paused = false;
+        gameSpeed = 1.0f;
+        muted = false;
 
         ratio = (float)Screen.width / (float)Screen.height;
         wideScreen = ratio > 1.5f ? true : false;
@@ -93,6 +107,8 @@ public class UIAndStats : MonoBehaviour {
         fifteenthHeight = height / 15;
         twoFifteenthWidth = width * 2 / 15;
         twoFifteenthHeight = height * 2 / 15;
+        ftFifteenWidth = width * 14 / 15;
+        ftFifteenHeight = height * 14 / 15;
         twentiethWidth = width / 20;
         twentiethHeight = height / 20;
         nineTenthWidth = 9* tenthWidth;
@@ -121,59 +137,119 @@ public class UIAndStats : MonoBehaviour {
             faster = Resources.Load("Textures/GameSpeed/4x3/Faster") as Texture2D;
             fastest = Resources.Load("Textures/GameSpeed/4x3/Fastest") as Texture2D;
         }
+        
         coin = Resources.Load("Textures/Stats/Gold") as Texture2D;
         life = Resources.Load("Textures/Stats/Life") as Texture2D;
+        pause = Resources.Load("Textures/MenuButtons/Pause") as Texture2D;
+        sound = Resources.Load("Textures/MenuButtons/Sound") as Texture2D;
+        noSound = Resources.Load("Textures/MenuButtons/NoSound") as Texture2D;
     }
 
     void OnGUI()
     {
-        //SCORE
-        GUI.BeginGroup(new Rect(0, 0, tenthWidth, twentiethHeight));
-
-        GUI.Box(new Rect(0, 0, tenthWidth, twentiethHeight), "Score: " + score, skin.box);
-
-        GUI.EndGroup();
-
-        //GAME SPEED + WAVES
-        GUI.BeginGroup(new Rect(halfWidth - tenthWidth, 0, quarterWidth, tenthHeight));
-
-        //CALL NEXT WAVE
-        if (GUI.Button(new Rect(0, 0, twentiethWidth, tenthHeight), "Next Wave", skin.button))
+        //PAUSE WINDOW
+        if (paused)
         {
+            pauseGame();
         }
-
-        //SPEED BUTTONS AND WAVE INFO
-        GUI.BeginGroup(new Rect(twentiethWidth, 0, fifthWidth, tenthHeight));
-        if (GUI.Button(new Rect(0, 0, twentiethWidth, twentiethHeight), play, skin.button))
+        else
         {
+            //SCORE
+            GUI.BeginGroup(new Rect(0, 0, tenthWidth, twentiethHeight));
+
+            GUI.Box(new Rect(0, 0, tenthWidth, twentiethHeight), "Score: " + score, uiSkin.box);
+
+            GUI.EndGroup();
+
+            //GAME SPEED + WAVES
+            GUI.BeginGroup(new Rect(halfWidth - tenthWidth, 0, quarterWidth, tenthHeight));
+
+            //CALL NEXT WAVE
+            if (GUI.Button(new Rect(0, 0, twentiethWidth, tenthHeight), "Next Wave", uiSkin.button))
+            {
+            }
+
+            //SPEED BUTTONS
+            GUI.BeginGroup(new Rect(twentiethWidth, 0, fifthWidth, tenthHeight));
+            if (GUI.Button(new Rect(0, 0, twentiethWidth, twentiethHeight), play, uiSkin.button))
+            {
+                Time.timeScale = 1;
+            }
+
+            if (GUI.Button(new Rect(twentiethWidth, 0, twentiethWidth, twentiethHeight), faster, uiSkin.button))
+            {
+                Time.timeScale = 2f;
+            }
+
+            if (GUI.Button(new Rect(tenthWidth, 0, twentiethWidth, twentiethHeight), fastest, uiSkin.button))
+            {
+                Time.timeScale = 3;
+            }
+
+            //Slider
+            //gameSpeed = GUI.HorizontalSlider(new Rect(0, 0, fifthWidth, twentiethHeight), gameSpeed, 0.1f, 3.0f, uiSkin.horizontalSlider, uiSkin.horizontalSliderThumb);
+            //Time.timeScale = gameSpeed;
+
+            //WAVE INFO
+            GUI.Box(new Rect(0, twentiethHeight, fifthWidth, twentiethHeight), "Wave: " + currentWave + " / " + maxWaves, uiSkin.box);
+
+            GUI.EndGroup();
+            GUI.EndGroup();
+
+            //STATS
+            GUI.BeginGroup(new Rect(fourFifthWidth, 0, fifthWidth, fifteenthHeight));
+
+            GUI.Box(new Rect(0, 0, fifteenthHeight, fifteenthHeight), coin, uiSkin.box);
+            GUI.Box(new Rect(fifteenthHeight, 0, tenthWidth - fifteenthHeight, fifteenthHeight), "" + gold, uiSkin.box);
+
+            GUI.Box(new Rect(tenthWidth, 0, fifteenthHeight, fifteenthHeight), life, uiSkin.box);
+            GUI.Box(new Rect(tenthWidth + fifteenthHeight, 0, tenthWidth - fifteenthHeight, fifteenthHeight), "" + lives, uiSkin.box);
+            GUI.EndGroup();
+
+            //PAUSE AND MENU BUTTONS
+            GUI.BeginGroup(new Rect(fourFifthWidth, ftFifteenHeight, fifthWidth, fifteenthHeight));
+
+            //Pause button
+            if (GUI.Button(new Rect(0, 0, twentiethWidth, fifteenthHeight), pause, uiSkin.button))
+            {
+                paused = true;
+                Time.timeScale = 0;
+            }
+
+            //Sound Button
+            if (muted)
+            {
+                if (GUI.Button(new Rect(twentiethWidth, 0, twentiethWidth, fifteenthHeight), noSound, uiSkin.button))
+                {
+                    AudioListener.volume = 1.0f;
+                    muted = false;
+                }
+            }
+            else
+            {
+                if (GUI.Button(new Rect(twentiethWidth, 0, twentiethWidth, fifteenthHeight), sound, uiSkin.button))
+                {
+                    AudioListener.volume = 0.0f;
+                    muted = true;
+                }
+            }
+
+            GUI.EndGroup();
+        }
+    }
+
+    private void pauseGame()
+    {
+        GUI.Window(0, new Rect(thirdWidth, thirdHeight, thirdWidth, thirdHeight), pausedWindow, "PAUSED", menuSkin.window);
+    }
+
+    private void pausedWindow(int windowID)
+    {
+        if (GUI.Button(new Rect(ninthWidth, ninthHeight, ninthWidth, ninthHeight), "GET BACK TO THE FIGHT!", menuSkin.button))
+        {
+            paused = false;
             Time.timeScale = 1;
         }
-
-        if (GUI.Button(new Rect(twentiethWidth, 0, twentiethWidth, twentiethHeight), faster, skin.button))
-        {
-            Time.timeScale = 1.5f;
-        }
-
-        if (GUI.Button(new Rect(tenthWidth, 0, twentiethWidth, twentiethHeight), fastest, skin.button))
-        {
-            Time.timeScale = 2;
-        }
-
-        GUI.Box(new Rect(0, twentiethHeight, fifthWidth, twentiethHeight), "Wave: " + currentWave + " / " + maxWaves, skin.box);
-
-        GUI.EndGroup();
-        GUI.EndGroup();
-
-        //STATS
-        GUI.BeginGroup(new Rect(fourFifthWidth, 0, fifthWidth, twentiethHeight));
-        
-        GUI.Box(new Rect(0, 0, twentiethHeight, twentiethHeight), coin, skin.box);
-        GUI.Box(new Rect(twentiethHeight, 0, tenthWidth - twentiethHeight, twentiethHeight), "" + gold, skin.box);
-
-        GUI.Box(new Rect(tenthWidth, 0, twentiethHeight, twentiethHeight), life, skin.box);
-        GUI.Box(new Rect(tenthWidth + twentiethHeight, 0, tenthWidth - twentiethHeight, twentiethHeight), "" + lives, skin.box);
-        GUI.EndGroup();
-
     }
 
     public void updateScore(int newscore)

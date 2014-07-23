@@ -12,7 +12,7 @@ public abstract class EnemyStats : Imports {
 
     // BASE STATS
     protected int health;
-    protected float damage;
+    protected int damage;
     protected float atkSpeed;
     protected NavMeshAgent movement;
     protected float buildingDamage;
@@ -69,7 +69,7 @@ public abstract class EnemyStats : Imports {
         if(health < 1)
         {
             //Atribuir valor ao jogador
-            gManager.destroyEnemy(this.gameObject);
+            gManager.destroyEnemy(gameObject);
             return true;
         }
         return false;
@@ -102,6 +102,11 @@ public abstract class EnemyStats : Imports {
     public void decreaseDamage(int num)
     {
         damage -= num;
+    }
+
+    public int getDamage()
+    {
+        return damage;
     }
 
     //############# LEVELUP 

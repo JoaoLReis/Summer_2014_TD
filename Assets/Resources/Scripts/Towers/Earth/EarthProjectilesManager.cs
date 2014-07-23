@@ -21,7 +21,7 @@ public class EarthProjectilesManager : MonoBehaviour {
         barrelEnd = FindChildWithTag("Weapon1");
         rotator = FindChildWithTag("Rotator");
         GameObject bulletprefab = Resources.Load("Projectiles/EarthProjectile") as GameObject;
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 5; i++)
         {
             GameObject bullet = Instantiate(bulletprefab, barrelEnd.position, Quaternion.identity) as GameObject;
             bullet.SetActive(false);

@@ -137,9 +137,9 @@ public class UberBotControlScript : MonoBehaviour
             //Test if this is userfriendly or maybe add it as an option
             if(movingBackwards)
             {
-                if (anim.GetFloat("Direction") > 0)
+                if (anim.GetFloat("Direction") < 0)
                     newRotation *= Quaternion.FromToRotation(transform.forward, transform.right);
-                else if (anim.GetFloat("Direction") < 0)
+                else if (anim.GetFloat("Direction") > 0)
                     newRotation *= Quaternion.FromToRotation(transform.forward, -transform.right);
             }
             else

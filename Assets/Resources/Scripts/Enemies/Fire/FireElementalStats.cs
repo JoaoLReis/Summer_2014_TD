@@ -8,7 +8,7 @@ public class FireElementalStats : EnemyStats {
         health = 20;
         damage = 1;
         atkSpeed = 1;
-        buildingDamage = 2f;
+        buildingDamage = 1f;
         type = (int)EnemyTypes.FIRE;
         rank = 1;
         armor = 0;

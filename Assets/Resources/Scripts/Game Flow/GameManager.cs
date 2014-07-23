@@ -87,6 +87,14 @@ public class GameManager : MonoBehaviour {
         return relays.First();
     }
 
+    public void enemyFinish(GameObject o)
+    {
+        int damage = o.GetComponent<EnemyStats>().getDamage();
+        lives -= damage;
+        uiStats.updateLives(lives);
+        Destroy(o);
+    }
+
     public void destroyEnemy(GameObject o)
     {
         int enemyvalue = o.GetComponent<EnemyStats>().value;

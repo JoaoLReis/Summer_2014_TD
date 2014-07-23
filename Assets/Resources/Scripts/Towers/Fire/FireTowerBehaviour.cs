@@ -35,4 +35,33 @@ public class FireTowerBehaviour : TowerBehaviour {
         }
     }
 
+    //void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("OTE CALLED!: " + "This: " + gameObject + " With That: " + other.name);
+    //    if (other.gameObject.tag == "Enemy")
+    //    {
+    //        int enemyType = other.gameObject.GetComponent<EnemyStats>().getType();
+    //        if (!(enemyType == (int)Element.FIRE || enemyType == (int)Element.LAVA || enemyType == (int)Element.LIGHTNING))
+    //        {
+    //            inRange.RemoveAll(item => item == null);
+    //            inRange.Remove(other.gameObject);
+
+
+    //            if (target.gameObject == other.gameObject)
+    //            {
+    //                if (inRange.Count > 0)
+    //                {
+    //                    target = inRange.First().transform;
+    //                    aim.setActiveTarget(target);
+    //                    damager.updateTarget(target);
+    //                }
+    //                else
+    //                {
+    //                    disableFiring();
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
 }
