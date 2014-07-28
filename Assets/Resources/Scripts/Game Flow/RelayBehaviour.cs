@@ -15,8 +15,11 @@ public class RelayBehaviour : MonoBehaviour {
         gManager.addRelay(gameObject);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Enemy")
+        {
+            gManager.enemyFinish(other.gameObject);
+        }
+    }
 }
