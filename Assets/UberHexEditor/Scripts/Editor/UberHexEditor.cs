@@ -48,6 +48,10 @@ public class UberHexEditor : Editor
                     tileMap.Hexes = new Hex[tileMap.gridSize * tileMap.gridSize];
                     GenerateHexGrid();
                 }
+                if (GUILayout.Button("Generate Hex neighbours"))
+                {
+                    GenerateHexNeighbours();
+                }
             }
             else if (GUILayout.Button("Edit TileMap"))
             {
@@ -192,7 +196,7 @@ public class UberHexEditor : Editor
                     Debug.Log("Couldnt intersect plane");
                     return;
                 }
-                tileMap.checkedHexes.Clear();
+                //tileMap.checkedHexes.Clear();
                 var mousePosition = worldToLocal.MultiplyPoint(ray.GetPoint(hit));
 
                 //Carefull with C# copy operations!
@@ -237,6 +241,26 @@ public class UberHexEditor : Editor
             instance.localPosition = hex.position;
             hex.instance = instance.gameObject;
             tileMap.updateHex(hex);
+            if (instance.name.Contains("low"))
+            {
+                hex.type = TileType.GROUND;
+            }
+            else if (instance.name.Contains("ramp"))
+            {
+                hex.type = TileType.RAMP;
+            }
+            else if (instance.name.Contains("Ice"))
+            {
+                hex.type = TileType.WATER;
+            }
+            else if (instance.name.Contains("Fire"))
+            {
+                hex.type = TileType.FIRE;
+            }
+            else if (instance.name.Contains("Nature"))
+            {
+                hex.type = TileType.NATURE;
+            }  
             //instance.localRotation = Quaternion.identity;//*Quaternion.Euler(0, tileMap.directions[index] * 90, 0);
         }
 
@@ -284,15 +308,97 @@ public class UberHexEditor : Editor
                 z = 0;
             }
         }
+
+        void GenerateHexNeighbours()
+        {
+            var currX = tileMap.transform.position.x;
+            var currZ = tileMap.transform.position.z;
+
+            bool pair = true;
+
+            for (int x = 0, z = 0; x < tileMap.gridSize; x++)
+            {
+                for (; z < tileMap.gridSize; z++)
+                {
+                    var currentI = x * tileMap.gridSize + z;
+                    Hex tmp = tileMap.Hexes[currentI];
+                    if (tmp.getList()!= null)
+                    {
+                        tmp.getList().Clear();
+                    }                      
+                    else
+                    {
+                        tmp.genList();
+                    }
+                    if (pair)
+                    {
+                        var index = (z +1) + tileMap.gridSize * x;
+                        if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = z + tileMap.gridSize * (x - 1);
+                        if (x > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z - 1) + tileMap.gridSize * (x - 1);
+                        if (x > 0.0f && z > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z - 1) + tileMap.gridSize * x;
+                        if (z > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z - 1) + tileMap.gridSize * (x + 1);
+                        if (x < tileMap.gridSize && z > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = z + tileMap.gridSize * (x + 1);
+                        if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);                  
+                    }
+                    else
+                    {
+                        var index = (z + 1) + tileMap.gridSize * x;
+                        if (z < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z + 1) + tileMap.gridSize * (x - 1);
+                        if (x > 0.0f && z < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = z + tileMap.gridSize * (x - 1);
+                        if (x > 0.0f && x > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z - 1) + tileMap.gridSize * x;
+                        if (z > 0.0f && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = (z + 1)+ tileMap.gridSize * (x + 1);
+                        if (x < tileMap.gridSize && z < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                        index = z + tileMap.gridSize * (x + 1);
+                        if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
+                            tmp.addHex(tileMap.Hexes[index]);
+                    }
+                    tileMap.updateHex(tmp);
+                }
+
+                if (pair)
+                {
+                    pair = false;
+                }
+                else
+                {
+                    pair = true;
+                }
+
+                //Atention using "odd-r" horizontal layout
+
+                z = 0;
+            }
+        }
     #endregion
 
     #region DrawFunctions
         void DrawCheckedTiles()
         {
-            foreach(Hex hex in tileMap.checkedHexes)
-            {
-                DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.red);     
-            }           
+            if(tileMap.checkedHexes != null)
+                foreach(Hex hex in tileMap.checkedHexes)
+                {
+                    DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.red);     
+                }           
         }
 
         void DrawSelectedTile()
