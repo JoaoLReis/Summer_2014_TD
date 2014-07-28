@@ -175,27 +175,12 @@ public class UberBotControlScript : MonoBehaviour
             {
                 rigidbody.velocity = Vector3.zero;
                 //rigidbody.AddForce(-Vector3.up * 20 * currentJumpSpeed * rigidbody.mass);
-                Debug.Log("test");
                 currentJumpSpeed = 0.0f;
                 //rigidbody.AddForce(Vector3.up * 20 * rigidbody.mass);
             }
         }
         else
         {
-            /*RaycastHit hit;
-            if (Physics.Raycast(transform.position, -transform.up, out hit)) //- [ out hit ? ]
-            {
-                if (hit.distance < 1.75f)
-                    currentJumpSpeed = 0.0f;
-                else
-                {
-                    currentJumpSpeed -= jumpIncrement;
-                    if (currentJumpSpeed < 0.0f)
-                        currentJumpSpeed = 0.0f;
-                }
-            }
-            else
-            {*/
             rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
             //Gravity
             //rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
@@ -222,11 +207,28 @@ public class UberBotControlScript : MonoBehaviour
 
         #region keyboard
         // STANDARD JUMPING 
-
+            //Debug.DrawRay(transform.position + Vector3.up * 0.5f, -Vector3.up);
             if (Input.GetButtonDown("Jump"))
             {
-                currentJumpIncrement = jumpIncrement;
-                currentJumpSpeed = jumpSpeed;
+                Debug.Log("testing");
+                RaycastHit hit;
+
+                if (Physics.Raycast(transform.position + Vector3.up * 0.5f, -Vector3.up, out hit, 50.0f)) //- [ out hit ? ]
+                {
+                    
+                    Debug.Log("I HIT SOMETHING");
+                    if (hit.distance > 7.0f)
+                    {
+                        currentJumpIncrement = 0.0f;
+                        currentJumpSpeed = 0.0f;
+                    }
+                    else
+                    {
+                        currentJumpIncrement = jumpIncrement;
+                        currentJumpSpeed = jumpSpeed;
+                    }
+
+                }
                 jetpack.SetActive(true);
                 anim.SetBool("Jump", true);
                 cameraScript.jumping = true;

@@ -28,13 +28,14 @@ public class HexTileMap : MonoBehaviour
         {
             var index = changeTo.x * gridSize + changeTo.z;
             Hexes[index] = changeTo;
-            Debug.Log("CHECK [" + changeTo.z + "][" + changeTo.x + "]_> " + Hexes[index].instance);
+            //Debug.Log("CHECK [" + changeTo.z + "][" + changeTo.x + "]_> " + Hexes[index].instance);
         }
 
         public void debugSelectedHex()
         {
             //Debug.Log("****start****");
             Debug.Log("tile has?_> "+selectedTile.instance);
+            Debug.Log(selectedTile.type);
             /*Debug.Log(selectedTile.position);
             Debug.Log("****end****");
             Debug.Log("****start2****");
@@ -55,7 +56,7 @@ public class HexTileMap : MonoBehaviour
                 //Instantiate (particle, hit.point, transform.rotation); // Create a particle if hit
             }
 
-            checkedHexes.Clear();
+            //checkedHexes.Clear();
             var mousePosition = hit.point;
             
             //Debug.Log(mousePosition);
@@ -79,7 +80,7 @@ public class HexTileMap : MonoBehaviour
                         var index = x * gridSize + z;
                         if (index < Hexes.Length)
                         {
-                            checkedHexes.Add(Hexes[index]);
+                            //checkedHexes.Add(Hexes[index]);
                             hexChecks++;
 
                             if (Vector3.Distance(Hexes[index].position, mousePosition) < Vector3.Distance(closest.position, mousePosition))
@@ -96,6 +97,7 @@ public class HexTileMap : MonoBehaviour
             if (closest.instance != null)
             {
                 selectedTile = closest;
+                checkedHexes = closest.getList();
                 return closest;
             }
             else return null;              
@@ -122,7 +124,8 @@ public class HexTileMap : MonoBehaviour
                         var index = x * gridSize + z;
                         if(index < Hexes.Length)
                         {
-                            checkedHexes.Add(Hexes[index]);
+                            //checkedHexes.Add(Hexes[index]);
+                            
                             hexChecks++;
 
                             if (Vector3.Distance(Hexes[index].position, mousePosition) < Vector3.Distance(closest.position, mousePosition))
@@ -140,7 +143,7 @@ public class HexTileMap : MonoBehaviour
 
             //Debug.Log(new Vector2(fx, fz));
             //Debug.Log(closest.position);
-            
+            checkedHexes = closest.getList();
 
             return closest;
         }
