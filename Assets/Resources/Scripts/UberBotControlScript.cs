@@ -161,12 +161,12 @@ public class UberBotControlScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Jump
+                //Jump
         if (anim.GetBool("Jump"))
         {
             if (currentJumpSpeed > 1.0f)
             {
-                Debug.Log("jumping");
+                //Debug.Log("jumping");
                 currentJumpSpeed += currentJumpIncrement;
                 currentJumpIncrement += jumpIncrement;
                 rigidbody.velocity = Vector3.up * 5 * currentJumpSpeed * rigidbody.mass * Time.deltaTime;
@@ -181,7 +181,7 @@ public class UberBotControlScript : MonoBehaviour
         }
         else
         {
-            rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
+            rigidbody.AddForce(-Vector3.up * 50 * rigidbody.mass);
             //Gravity
             //rigidbody.AddForce(-Vector3.up * 20 * rigidbody.mass);
             //}

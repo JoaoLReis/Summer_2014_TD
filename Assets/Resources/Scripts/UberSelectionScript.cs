@@ -13,19 +13,19 @@ public abstract class UberSelectionScript : Imports {
 
     void OnMouseEnter()
     {
-        renderer.material.color = Color.green;
+        renderer.sharedMaterial.color = Color.green;
     }
 
     void OnMouseExit()
     {
-        renderer.material.color = color;
+        renderer.sharedMaterial.color = color;
     }
 
     void OnMouseDown()
     {
         if (gManager.getGold() > towerValue)
         {
-            renderer.material.color = color;
+            renderer.sharedMaterial.color = color;
             buildMenuScript.Instantiate(tower);
         }
         else
@@ -36,7 +36,7 @@ public abstract class UberSelectionScript : Imports {
 
     private void notEnoughMoney()
     {
-        renderer.material.color = Color.red;
+        renderer.sharedMaterial.color = Color.red;
         Invoke("restore", 0.5f);
     }
 
