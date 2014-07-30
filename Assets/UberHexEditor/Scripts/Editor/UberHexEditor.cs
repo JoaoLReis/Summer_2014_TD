@@ -235,6 +235,9 @@ public class UberHexEditor : Editor
     #region GenerateFunctions
         void GenerateAndPlaceTile(Hex hex)
         {
+            //check if the tile is already built
+            if (hex.hasInstance())
+                return;
             //Place the tile
             var instance = (Transform)PrefabUtility.InstantiatePrefab(tileMap.tilePrefab);
             instance.parent = tileMap.transform;
