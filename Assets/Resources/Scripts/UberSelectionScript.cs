@@ -3,12 +3,10 @@ using System.Collections;
 
 public abstract class UberSelectionScript : Imports {
 
-    protected GameObject tower;
     protected GameManager gManager;
     protected GlobalData data;
     protected UberBuildMenu buildMenuScript;
     protected Color color;
-    protected int towerValue;
 
 
     void OnMouseEnter()
@@ -21,20 +19,7 @@ public abstract class UberSelectionScript : Imports {
         renderer.sharedMaterial.color = color;
     }
 
-    void OnMouseDown()
-    {
-        if (gManager.getGold() > towerValue)
-        {
-            renderer.sharedMaterial.color = color;
-            buildMenuScript.Instantiate(tower);
-        }
-        else
-        {
-            notEnoughMoney();
-        }
-    }
-
-    private void notEnoughMoney()
+    protected void notEnoughMoney()
     {
         renderer.sharedMaterial.color = Color.red;
         Invoke("restore", 0.5f);

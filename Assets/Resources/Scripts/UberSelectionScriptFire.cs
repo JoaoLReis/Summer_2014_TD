@@ -3,6 +3,9 @@ using System.Collections;
 
 public class UberSelectionScriptFire : UberSelectionScript{
 
+    protected GameObject tower;
+    protected int towerValue;
+
     void Start()
     {
         color = renderer.material.color;
@@ -13,4 +16,16 @@ public class UberSelectionScriptFire : UberSelectionScript{
         towerValue = data.getPriceTable()[(int)Element.FIRE];
     }
 
+    void OnMouseDown()
+    {
+        if (gManager.getGold() > towerValue)
+        {
+            renderer.sharedMaterial.color = color;
+            buildMenuScript.Instantiate(tower);
+        }
+        else
+        {
+            notEnoughMoney();
+        }
+    }
 }

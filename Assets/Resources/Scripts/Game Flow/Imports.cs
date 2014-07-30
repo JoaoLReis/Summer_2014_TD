@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 
 public abstract class Imports : MonoBehaviour {
-    
+
+    public enum GameState { Relay, Defence, Success, Failure}
+
     protected enum Element { FIRE, EARTH, WATER, ICE, LAVA, ARCANE, LIGHTNING, WIND }
 
     protected enum EnemyTypes { FIRE, EARTH, WATER }

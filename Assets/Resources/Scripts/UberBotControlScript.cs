@@ -22,14 +22,9 @@ public class UberBotControlScript : MonoBehaviour
     private Transform CamPos;                       // a reference to the CamPos object child of the character
     private Transform LookAtPos;
     private bool movingBackwards;                   // used to control if the character is moving backwards or not
-    private bool buildMode;
-    private bool selectMode;
     private Vector3 curNormal;                      // unused at the moment
     private UberCamera cameraScript;                // a reference to the main camera script
-    private HexTileMap tileMapScript;               // a reference to the hex tilemap script
     private GameObject jetpack;
-    private Transform buildMenu;
-    private UberBuildMenu buildMenuScript;
     public float currentJumpSpeed = 0.0f;
     public float currentJumpIncrement = 0.0f;
 
@@ -43,40 +38,14 @@ public class UberBotControlScript : MonoBehaviour
         CamPos = GameObject.Find("CamPos").transform;
         LookAtPos = GameObject.Find("LookAtPos").transform;
         jetpack = GameObject.Find("jetpack");
-        tileMapScript = GameObject.Find("HexEditor").GetComponent<HexTileMap>();
-        buildMenu = GameObject.Find("BuildMenu").transform;
-        buildMenuScript = buildMenu.GetComponent<UberBuildMenu>();
-        buildMenu.gameObject.SetActive(false);
         jetpack.SetActive(false);
         cameraScript = Camera.main.GetComponent<UberCamera>();      
         movingBackwards = false;
-        buildMode = false;
-        selectMode = false;
         curNormal = Vector3.up;
 		//enemy = GameObject.Find("Enemy").transform;	
 		if(anim.layerCount ==2)
 			anim.SetLayerWeight(1, 1);
 	}
-
-    void OnBuildControl()
-    {
-        if(buildMode)
-        {
-            //probably can be optimised
-            Hex intersectedTile = tileMapScript.RuntimeHexFromWorld();
-            if(intersectedTile != null)
-            {
-                buildMenu.gameObject.SetActive(true);
-                if (selectMode)
-                {
-                    buildMenuScript.goRegular();
-                }
-                else buildMenu.position = intersectedTile.getBuildPosition();               
-                //Camera.main.GetComponent<UberCamera>().SetLookatBuild(true);
-
-            }
-        }
-    }
 
     void OnAnimatorMove()
     {
@@ -240,38 +209,6 @@ public class UberBotControlScript : MonoBehaviour
                 anim.SetBool("Jump", false);
                 cameraScript.jumping = false;
             }
-
-            // BUILD MODE
-
-            if(Input.GetButtonDown("Build"))
-            {
-                if(buildMode)
-                {
-                    buildMode = false;
-                    buildMenu.gameObject.SetActive(false);
-                    selectMode = false;
-                    Camera.main.GetComponent<UberCamera>().SetLookatBuild(false);
-                }
-                else
-                {
-                    buildMode = true;
-                }              
-            }
-
-            if(buildMode)
-            {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    if (selectMode)
-                    {
-                        selectMode = false;
-                        buildMenuScript.goHidden();
-                    }
-                    else selectMode = true;
-                }
-            }
-        #endregion 
-
-           OnBuildControl();
+        #endregion
     }
 }

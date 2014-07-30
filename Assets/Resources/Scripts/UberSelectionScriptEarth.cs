@@ -3,6 +3,9 @@ using System.Collections;
 
 public class UberSelectionScriptEarth : UberSelectionScript{
 
+    protected GameObject tower;
+    protected int towerValue;
+
     void Start()
     {
         color = renderer.material.color;
@@ -11,6 +14,19 @@ public class UberSelectionScriptEarth : UberSelectionScript{
         data = GameObject.FindWithTag("DataHolder").GetComponent<GlobalData>();
         tower = Resources.Load("Towers/EarthTower") as GameObject;
         towerValue = data.getPriceTable()[(int)Element.EARTH];
+    }
+
+    void OnMouseDown()
+    {
+        if (gManager.getGold() > towerValue)
+        {
+            renderer.sharedMaterial.color = color;
+            buildMenuScript.Instantiate(tower);
+        }
+        else
+        {
+            notEnoughMoney();
+        }
     }
 
 }

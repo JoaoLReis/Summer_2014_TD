@@ -3,8 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameManager : MonoBehaviour {
+[RequireComponent(typeof(Spawner))]
+[RequireComponent(typeof(Level))]
+[RequireComponent(typeof(GameFinisher))]
+public class GameManager : Imports {
 
+
+    private GameState gameState;
     private UIAndStats uiStats;
 
     //Level
@@ -15,6 +20,7 @@ public class GameManager : MonoBehaviour {
     private ArrayList[] enemyIndex; 
     private Level level;
     private Spawner spawner;
+    private GameFinisher finisher;
 
 
     //PlayerStats
@@ -40,7 +46,9 @@ public class GameManager : MonoBehaviour {
         relays = new List<GameObject>();
         level = GetComponent<Level>();
         spawner = GetComponent<Spawner>();
+        finisher = GetComponent<GameFinisher>();
         relaysNumber = 1;
+        gameState = GameState.Relay;
     }
 
     void Start()
@@ -72,6 +80,7 @@ public class GameManager : MonoBehaviour {
         relays.Add(relay);
         if(relays.Count == relaysNumber)
         {
+            gameState = GameState.Defence;
             startWaves();
         }
     }
@@ -92,7 +101,14 @@ public class GameManager : MonoBehaviour {
         int damage = o.GetComponent<EnemyStats>().getDamage();
         lives -= damage;
         uiStats.updateLives(lives);
+        if(lives < 1)
+        {
+            //Finish game -> get script that finishes and activate. Stop game.
+        }
         Destroy(o);
+
+
+
     }
 
     public void destroyEnemy(GameObject o)
@@ -124,6 +140,11 @@ public class GameManager : MonoBehaviour {
     public int getGold()
     {
         return gold;
+    }
+
+    public GameState getGameState()
+    {
+        return gameState;
     }
 
     public void createdTower(GameObject tower)

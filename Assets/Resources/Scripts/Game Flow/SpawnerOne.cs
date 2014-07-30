@@ -134,7 +134,7 @@ public class SpawnerOne : Spawner {
             }
             toSpawn.SetActive(true);
             toSpawn.GetComponent<MoveTowardsObjective>().startMovement();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(toSpawn.GetComponent<NavMeshAgent>().speed/5.0f);
         }
         
     }
