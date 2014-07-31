@@ -26,8 +26,8 @@ public class UberMenuUi : MonoBehaviour {
     public float YpixelInlaySize;
     public Texture bigBox;
 
-    private float pickPercentage = 0.7f;
-    private float labelPercentage = 0.2f;
+    private float pickPercentage = 0.6f;
+    private float labelPercentage = 0.3f;
     private float descriptionPercentage = 0.1f;
 
 
@@ -137,7 +137,7 @@ public class UberMenuUi : MonoBehaviour {
                         }
                     }
                         //      Option Label Name
-                    GUI.Label(new Rect(Xsize / 2.0f - stringSize.x / 2.0f, pickPercentage * Ysize + YpixelInlaySize, Xsize, labelPercentage * Ysize), text, style);
+                    GUI.Box(new Rect(Xsize / 2.0f - stringSize.x / 2.0f, pickPercentage * Ysize + YpixelInlaySize, Xsize, labelPercentage * Ysize), text, style);
 
                         //      Description
                     Rect description = new Rect(XpixelInlaySize, pickPercentage * Ysize + labelPercentage * Ysize, Xsize - 2 * XpixelInlaySize, descriptionPercentage * Ysize - YpixelInlaySize);
@@ -164,7 +164,7 @@ public class UberMenuUi : MonoBehaviour {
                         Application.LoadLevel(""+text+""); 
                     }
                     //      Option Label Name
-                    GUI.Label(new Rect(Xsize / 2.0f - stringSize.x / 2.0f, pickPercentage * Ysize + YpixelInlaySize, Xsize, labelPercentage * Ysize), text, style);
+                    GUI.Box(new Rect(Xsize / 2.0f - stringSize.x / 2.0f, pickPercentage * Ysize + YpixelInlaySize, Xsize, labelPercentage * Ysize), text, style);
 
                     //      Description
                     Rect description = new Rect(XpixelInlaySize, pickPercentage * Ysize + labelPercentage * Ysize, Xsize - 2 * XpixelInlaySize, descriptionPercentage * Ysize - YpixelInlaySize);
