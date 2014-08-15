@@ -16,11 +16,21 @@ public class UberHexEditor : Editor
     Matrix4x4 worldToLocal;
 
     bool editing;
+    bool showPath = false;
 
     int direction;
 
+    Hex KselectedHex;
+    Hex LselectedHex;
+
+    List<Hex> path = new List<Hex>();
+
     void Awake()
     {
+        KselectedHex = ScriptableObject.CreateInstance("Hex") as Hex;
+        KselectedHex.init(new Vector3(0,0,0),0,0);
+        LselectedHex = ScriptableObject.CreateInstance("Hex") as Hex;
+        LselectedHex.init(new Vector3(0, 0, 0), 0, 0);
         tileMap = (HexTileMap)target;
     }
 
@@ -32,6 +42,7 @@ public class UberHexEditor : Editor
             {
                 //tileMap = GameObject.Find("UberTiles").GetComponent<TileMap>();
                 tileMap = (HexTileMap)target;
+                Caching.CleanCache();
                 tileMap.Hexes = new Hex[tileMap.gridSize * tileMap.gridSize];
             }
 
@@ -41,16 +52,23 @@ public class UberHexEditor : Editor
                 if (GUILayout.Button("Stop Editing"))
                 {
                     editing = false;
+                    //StaticBatchingUtility.Combine(tileMap.gameObject);
+                    Caching.CleanCache();
                     EditorUtility.SetDirty(tileMap);                  
                 }
                 if (GUILayout.Button("Generate Hex matrix clears everything"))
                 {
+                    Caching.CleanCache();
                     tileMap.Hexes = new Hex[tileMap.gridSize * tileMap.gridSize];
                     GenerateHexGrid();
                 }
                 if (GUILayout.Button("Generate Hex neighbours"))
                 {
                     GenerateHexNeighbours();
+                }
+                if (GUILayout.Button("Generate HexPath neighbours"))
+                {
+                    GenerateHexPathNeighbours();
                 }
             }
             else if (GUILayout.Button("Edit TileMap"))
@@ -181,6 +199,7 @@ public class UberHexEditor : Editor
             DrawHexgrid();
             DrawCheckedTiles();
             DrawSelectedTile();
+            DrawPathTestingHexesAndPath();
             HandleUtility.Repaint();
         }
 
@@ -201,7 +220,7 @@ public class UberHexEditor : Editor
 
                 //Carefull with C# copy operations!
                 Hex closest = tileMap.HexFromWorld(mousePosition);
-                Debug.Log(closest.position);
+                //Debug.Log(closest.position);
                 tileMap.selectedTile = closest;
             }
             else if (Event.current.keyCode == (KeyCode.B) && Event.current.type == EventType.KeyDown)
@@ -214,10 +233,27 @@ public class UberHexEditor : Editor
                 DeleteSelectedHexTile();
                 Event.current.Use();
             }
-            else if (Event.current.keyCode == (KeyCode.P) && Event.current.type == EventType.KeyDown)
+            else if (Event.current.keyCode == (KeyCode.J) && Event.current.type == EventType.KeyDown)
             {
                 Debug.Log(tileMap.Hexes.Length);
                 tileMap.debugSelectedHex();
+                Event.current.Use();
+            }
+            else if (Event.current.keyCode == (KeyCode.K) && Event.current.type == EventType.KeyDown)
+            {
+                KselectedHex = tileMap.selectedTile;
+                Event.current.Use();
+            }
+            else if (Event.current.keyCode == (KeyCode.L) && Event.current.type == EventType.KeyDown)
+            {
+                LselectedHex = tileMap.selectedTile;
+                Event.current.Use();
+            }
+            else if (Event.current.keyCode == (KeyCode.P) && Event.current.type == EventType.KeyDown)
+            {
+                showPath = !showPath;
+                tileMap.initSearchLists();
+                path = tileMap.searchPath(KselectedHex, LselectedHex);
                 Event.current.Use();
             }
         }
@@ -240,30 +276,13 @@ public class UberHexEditor : Editor
                 return;
             //Place the tile
             var instance = (Transform)PrefabUtility.InstantiatePrefab(tileMap.tilePrefab);
+            //instance.gameObject.isStatic = true;
             instance.parent = tileMap.transform;
             instance.localPosition = hex.position;
             hex.instance = instance.gameObject;
+            defineHexTileType(hex);
             tileMap.updateHex(hex);
-            if (instance.name.Contains("low"))
-            {
-                hex.type = TileType.GROUND;
-            }
-            else if (instance.name.Contains("ramp"))
-            {
-                hex.type = TileType.RAMP;
-            }
-            else if (instance.name.Contains("Ice"))
-            {
-                hex.type = TileType.WATER;
-            }
-            else if (instance.name.Contains("Fire"))
-            {
-                hex.type = TileType.FIRE;
-            }
-            else if (instance.name.Contains("Nature"))
-            {
-                hex.type = TileType.NATURE;
-            }  
+            
             //instance.localRotation = Quaternion.identity;//*Quaternion.Euler(0, tileMap.directions[index] * 90, 0);
         }
 
@@ -290,7 +309,9 @@ public class UberHexEditor : Editor
                 {
                     DrawHex(currX, currZ, Color.white, sizeS, h, r, a);
                     var index = x * tileMap.gridSize + z;
-                    tileMap.Hexes[index] = new Hex(new Vector3(currX, 0, currZ), z, x);
+
+                    tileMap.Hexes[index] = ScriptableObject.CreateInstance("Hex") as Hex;
+                    tileMap.Hexes[index].init(new Vector3(currX, 0, currZ), z, x);
                     currZ += tileMap.tileSize;
                 }
 
@@ -312,8 +333,253 @@ public class UberHexEditor : Editor
             }
         }
 
+        bool isLow(Hex hex)
+        {
+            return (hex.type == TileType.WATER_L || hex.type == TileType.NATURE_L || hex.type == TileType.FIRE_L);
+        }
+
+        bool isMed(Hex hex)
+        {
+            return (hex.type == TileType.WATER_M || hex.type == TileType.NATURE_M || hex.type == TileType.FIRE_M);
+        }
+
+        bool isHigh(Hex hex)
+        {
+            return (hex.type == TileType.WATER_H || hex.type == TileType.NATURE_H || hex.type == TileType.FIRE_H);
+        }
+
+        bool isRamp(Hex hex)
+        {
+            return (hex.type == TileType.RAMP_H || hex.type == TileType.RAMP_L);
+        }
+
+        bool existsConnection(Hex curr, Hex next)
+        {
+            if(isLow(curr))
+            {
+                if(isLow(next))
+                {
+                    return true;
+                }
+                else if(next.type == TileType.RAMP_L)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if(isMed(curr))
+            {
+                if(isMed(next))
+                {
+                    return true;
+                }
+                else if (isRamp(next))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (isHigh(curr))
+            {
+                if(isHigh(next))
+                {
+                    return true;
+                }
+                else if (next.type == TileType.RAMP_H)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (curr.type == TileType.RAMP_L)
+            {
+                if (isMed(next))
+                {
+                    return true;
+                }
+                else if (next.type == TileType.RAMP_H)
+                {
+                    return true;
+                }
+                else if (isLow(next))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (curr.type == TileType.RAMP_H)
+            {
+                if (isHigh(next))
+                {
+                    return true;
+                }
+                else if (next.type == TileType.RAMP_L)
+                {
+                    return true;
+                }
+                else if (isMed(next))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        void defineHexTileType(Hex hex)
+        {
+            if(hex.instance != null)
+            {
+                if (hex.instance.name.Contains("ramp_L"))
+                {
+                    hex.type = TileType.RAMP_L;
+                }
+                else if (hex.instance.name.Contains("ramp_H"))
+                {
+                    hex.type = TileType.RAMP_H;
+                }
+                else if (hex.instance.name.Contains("Ice"))
+                {
+                    if (hex.instance.name.Contains("low"))
+                    {
+                        hex.type = TileType.WATER_L;
+                    }
+                    else if (hex.instance.name.Contains("med"))
+                    {
+                        hex.type = TileType.WATER_M;
+                    }
+                    else
+                    {
+                        hex.type = TileType.WATER_H;
+                    }
+                }
+                else if (hex.instance.name.Contains("Fire"))
+                {
+                    if (hex.instance.name.Contains("low"))
+                    {
+                        hex.type = TileType.FIRE_L;
+                    }
+                    else if (hex.instance.name.Contains("med"))
+                    {
+                        hex.type = TileType.FIRE_M;
+                    }
+                    else
+                    {
+                        hex.type = TileType.FIRE_H;
+                    }
+                }
+                else if (hex.instance.name.Contains("Nature"))
+                {
+                    if (hex.instance.name.Contains("low"))
+                    {
+                        hex.type = TileType.NATURE_L;
+                    }
+                    else if (hex.instance.name.Contains("med"))
+                    {
+                        hex.type = TileType.NATURE_M;
+                    }
+                    else
+                    {
+                        hex.type = TileType.NATURE_H;
+                    }
+                }
+            }
+        }
+
+        /*List<Hex> GeneratePathNeighborListFromHex(Hex hex)
+        {
+            //Regen tile type just in case....
+            defineHexTileType(hex);
+            List<Hex> pathList = new List<Hex>();
+            for (int i = 0; i < tileMap.Hexes[currentI].getList().Count; i++)
+            {
+                if (existsConnection(curHex, tileMap.Hexes[currentI].getList()[i]))
+                {
+                    pathList.Add(tileMap.Hexes[currentI].getList()[i]);
+                }
+            }
+        }*/
+
+        void GenerateHexPathNeighbours()
+        {
+           var currX = tileMap.transform.position.x;
+            var currZ = tileMap.transform.position.z;
+
+            bool pair = true;
+
+            for (int x = 0, z = 0; x < tileMap.gridSize; x++)
+            {
+                for (; z < tileMap.gridSize; z++)
+                {
+                    var currentI = x * tileMap.gridSize + z;
+                    Hex curHex = tileMap.Hexes[currentI];
+
+
+                    //Regen tile type just in case....
+                    defineHexTileType(curHex);
+
+                    /*if (tileMap.Hexes[currentI].getPathList() != null)
+                    {
+                        tileMap.Hexes[currentI].getPathList().Clear();
+                    }
+                    else
+                    {
+                        tileMap.Hexes[currentI].genPathList();
+                    }*/
+
+                    for(int i = 0; i < tileMap.Hexes[currentI].getList().Count; i++)
+                    {
+                        var testedI = tileMap.Hexes[currentI].getList()[i].getValue()* tileMap.gridSize + tileMap.Hexes[currentI].getList()[i].getKey();
+                        Hex testedHex = tileMap.Hexes[testedI];
+                        if (existsConnection(curHex, testedHex))
+                        {
+                            curHex.addPathHex(tileMap.Hexes[currentI].getList()[i]);
+                        }
+                    }
+                    /*foreach (Hex hex in )
+                    {
+                        if (existsConnection(curHex, hex))
+                        {
+                            curHex.addPathHex(hex);
+                        }
+                    }*/
+                    tileMap.updateHex(curHex);
+                }
+                if (pair)
+                {
+                    pair = false;
+                }
+                else
+                {
+                    pair = true;
+                }
+
+                //Atention using "odd-r" horizontal layout...
+
+                z = 0;
+            }
+        }
+
         void GenerateHexNeighbours()
         {
+            Debug.Log("SIZE");
+            Debug.Log(tileMap.Hexes.Length);
+            //Debug.Log("Total allocated memory : " + System.GC.GetTotalMemory(true) + " bytes");
             var currX = tileMap.transform.position.x;
             var currZ = tileMap.transform.position.z;
 
@@ -324,58 +590,74 @@ public class UberHexEditor : Editor
                 for (; z < tileMap.gridSize; z++)
                 {
                     var currentI = x * tileMap.gridSize + z;
+                    
                     Hex tmp = tileMap.Hexes[currentI];
-                    if (tmp.getList()!= null)
+                    if (tmp.getList().Count > 0)
                     {
                         tmp.getList().Clear();
                     }                      
                     else
                     {
-                        tmp.genList();
+                        if(tmp.getList() == null)
+                            tmp.genList();
                     }
+                    
                     if (pair)
                     {
                         var index = (z +1) + tileMap.gridSize * x;
                         if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = z + tileMap.gridSize * (x - 1);
-                        if (x > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z - 1) + tileMap.gridSize * (x - 1);
-                        if (x > 0.0f && z > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z - 1) + tileMap.gridSize * x;
-                        if (z > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z - 1) + tileMap.gridSize * (x + 1);
-                        if (x < tileMap.gridSize && z > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = z + tileMap.gridSize * (x + 1);
-                        if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);                  
+                            tmp.addHex(tileMap.Hexes[index].zx);
+
+                            index = z + tileMap.gridSize * (x - 1);
+                            if (x > 0.0f && index < tileMap.Hexes.Length)
+                                tmp.addHex(tileMap.Hexes[index].zx);
+
+                                index = (z - 1) + tileMap.gridSize * (x - 1);
+                                if (x > 0.0f && z > 0.0f && index < tileMap.Hexes.Length)
+                                    tmp.addHex(tileMap.Hexes[index].zx);
+
+                                    index = (z - 1) + tileMap.gridSize * x;
+                                    if (z > 0.0f && index < tileMap.Hexes.Length)
+                                        tmp.addHex(tileMap.Hexes[index].zx);
+
+                                        index = (z - 1) + tileMap.gridSize * (x + 1);
+                                        if (x < tileMap.gridSize && z > 0.0f && index < tileMap.Hexes.Length)
+                                            tmp.addHex(tileMap.Hexes[index].zx);
+
+                                            index = z + tileMap.gridSize * (x + 1);
+                                            if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
+                                                tmp.addHex(tileMap.Hexes[index].zx);              
                     }
                     else
                     {
                         var index = (z + 1) + tileMap.gridSize * x;
                         if (z < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z + 1) + tileMap.gridSize * (x - 1);
-                        if (x > 0.0f && z < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = z + tileMap.gridSize * (x - 1);
-                        if (x > 0.0f && x > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z - 1) + tileMap.gridSize * x;
-                        if (z > 0.0f && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = (z + 1)+ tileMap.gridSize * (x + 1);
-                        if (x < tileMap.gridSize && z < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
-                        index = z + tileMap.gridSize * (x + 1);
-                        if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
-                            tmp.addHex(tileMap.Hexes[index]);
+                            tmp.addHex(tileMap.Hexes[index].zx);
+
+                            index = (z + 1) + tileMap.gridSize * (x - 1);
+                            if (x > 0.0f && z < tileMap.gridSize && index < tileMap.Hexes.Length)
+                                tmp.addHex(tileMap.Hexes[index].zx);
+
+                                index = z + tileMap.gridSize * (x - 1);
+                                if (x > 0.0f && x > 0.0f && index < tileMap.Hexes.Length)
+                                    tmp.addHex(tileMap.Hexes[index].zx);
+
+                                    index = (z - 1) + tileMap.gridSize * x;
+                                    if (z > 0.0f && index < tileMap.Hexes.Length)
+                                        tmp.addHex(tileMap.Hexes[index].zx);
+
+                                        index = (z + 1) + tileMap.gridSize * (x + 1);
+                                        if (x < tileMap.gridSize && z < tileMap.gridSize && index < tileMap.Hexes.Length)
+                                            tmp.addHex(tileMap.Hexes[index].zx);
+
+                                            index = z + tileMap.gridSize * (x + 1);
+                                            if (x < tileMap.gridSize && index < tileMap.Hexes.Length)
+                                                tmp.addHex(tileMap.Hexes[index].zx);
+
                     }
-                    tileMap.updateHex(tmp);
+                    //Debug.Log("SIZE-neighbor!!:");
+                    //Debug.Log(tmp.getList().Count);
+                    //tileMap.updateHex(tmp);
                 }
 
                 if (pair)
@@ -391,6 +673,11 @@ public class UberHexEditor : Editor
 
                 z = 0;
             }
+            //Debug.Log("FINISHED!!!!!");
+           // Debug.Log("SIZE");
+            //Debug.Log(tileMap.Hexes.Length);
+            //Debug.Log("Total allocated memory : " + System.GC.GetTotalMemory(true) + " bytes");
+            //System.GC.Collect();
         }
     #endregion
 
@@ -398,10 +685,31 @@ public class UberHexEditor : Editor
         void DrawCheckedTiles()
         {
             if(tileMap.checkedHexes != null)
-                foreach(Hex hex in tileMap.checkedHexes)
+                foreach (HexKeyValueInt zx in tileMap.checkedHexes)
                 {
+                    Hex hex = tileMap.Hexes[zx.getValue() * tileMap.gridSize + zx.getKey()];
                     DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.red);     
                 }           
+        }
+
+        void DrawPathTestingHexesAndPath()
+        {
+            if (showPath)
+            {
+                DrawRect(KselectedHex.position.x, KselectedHex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.blue);
+                DrawRect(LselectedHex.position.x, LselectedHex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.green);
+
+                if (tileMap.searchedHexes != null)
+                    foreach (Hex hex in tileMap.searchedHexes)
+                {
+                    DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.yellow);
+                } 
+                /*if (path != null)
+                    foreach (Hex hex in path)
+                    {
+                        DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.yellow);
+                    }  */  
+            }
         }
 
         void DrawSelectedTile()

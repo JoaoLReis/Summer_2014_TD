@@ -132,6 +132,21 @@ public abstract class TowerBehaviour : Imports {
         }
     }
 
+    void restartParticleSystem(GameObject obj, bool val)
+    {
+        currentWeapon.SetActive(true);
+        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+        if (val)
+        {
+            ps.Play(true);
+        }
+        else  
+        {
+            ps.Pause();
+           
+        }      
+    }
+
     protected IEnumerator enableFiring(Transform t)
     {
         do
@@ -139,6 +154,7 @@ public abstract class TowerBehaviour : Imports {
             target = t;
             aim.setActiveTarget(target);
             aim.enabled = true;
+            //restartParticleSystem(currentWeapon, true);
             currentWeapon.SetActive(true);
             damager.updateTarget(target);
             damager.enabled = true;
@@ -153,6 +169,7 @@ public abstract class TowerBehaviour : Imports {
     {
         aim.reset(transform.position + transform.forward);
         currentWeapon.SetActive(false);
+        //restartParticleSystem(currentWeapon, false);
         aim.enabled = false;
         aim.setActiveTarget(null);
         damager.enabled = false;

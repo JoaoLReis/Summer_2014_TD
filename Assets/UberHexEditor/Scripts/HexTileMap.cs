@@ -11,22 +11,122 @@ public class HexTileMap : MonoBehaviour
     public float tileSize = 1;
     public int gridSize = 4;
     public Hex[] Hexes;
-    public List<Hex> checkedHexes = new List<Hex>();
+    public List<HexKeyValueInt> checkedHexes = new List<HexKeyValueInt>();
     public Hex selectedTile;
     public float xOffset, zOffset;
     public float hexRadius;
     public Transform tilePrefab;
 	public HexSet hexSet;
 
+    //Search lists
+    public List<Hex> searchedHexes;
+    public List<Hex> toBeEvaluated;
+    //private List<Hex> navigatedHexes;
+
     void Start()
     {
         game = GameObject.Find("Game").GetComponent<GameState>();
+        initSearchLists();
     }
+
+    #region Search Functions
+        public void initSearchLists()
+        {
+            searchedHexes = new List<Hex>();
+            toBeEvaluated = new List<Hex>();
+            //navigatedHexes = new List<Hex>();
+        }
+
+        public void clearSearchLists()
+        {
+            searchedHexes.Clear();
+            toBeEvaluated.Clear();
+            //navigatedHexes.Clear();
+        }
+
+        float heuristic_cost_estimate(Hex origin, Hex destination)
+        {
+            return (destination.position - origin.position).sqrMagnitude;
+        }
+
+        Hex getLowestFScore(List<Hex> list)
+        {
+            Hex lowest = toBeEvaluated[0];
+            for (int i = 0; i < list.Count; i++)
+            {
+                Hex hex = list[i];
+                if (hex.f_score <= lowest.f_score)
+                    lowest = hex;
+            }
+            return lowest;
+        }
+
+        // Reconstructs a path list leading to a goal.
+        List<Hex> reconstruct_path(Hex goal)
+        {
+            List<Hex> path = new List<Hex>();
+            Hex hex = goal;
+            while(hex != null)
+            {
+                path.Add(hex);
+                hex = hex.cameFrom;
+            }
+            return path;
+        }
+
+        public List<Hex> searchPath(Hex origin, Hex destination)
+        {
+            clearSearchLists();
+
+            origin.g_score = 0;
+            origin.f_score = origin.g_score + heuristic_cost_estimate(origin, destination);
+            toBeEvaluated.Add(origin);
+
+            while(toBeEvaluated.Count != 0)
+            {
+                Hex current = getLowestFScore(toBeEvaluated);
+                if(Vector3.Distance(current.position, destination.position) <= 0.01f)
+                {
+                    return reconstruct_path(current);
+                }
+
+                toBeEvaluated.Remove(current);
+                searchedHexes.Add(current);
+                Debug.Log("searched: "+current.position);
+                Debug.Log("neighborcount: " + current.getPathList().Count);
+                foreach (HexKeyValueInt zx in current.getPathList())
+                {
+                    Hex neighbor = Hexes[zx.getValue() *gridSize + zx.getKey()];
+                    Debug.Log("searched: " + neighbor.position);
+                    if(searchedHexes.Contains(neighbor))
+                    {
+                        continue;
+                    }
+                    float tentative_g_score = current.g_score + Vector3.Distance(current.position, neighbor.position);
+
+                    if(!toBeEvaluated.Contains(neighbor) || tentative_g_score < neighbor.g_score)
+                    {
+                        neighbor.cameFrom = current;
+                        neighbor.g_score = tentative_g_score;
+                        neighbor.f_score = neighbor.g_score + heuristic_cost_estimate(neighbor, destination);
+                        if (!toBeEvaluated.Contains(neighbor))
+                            toBeEvaluated.Add(neighbor);
+                    }
+                }
+            }
+            throw new Exception("A* search failure!");
+        }
+
+        /*public List<Hex> getPathToRelay()
+        {
+            searchPath
+        }*/
+    #endregion
 
     #region Hex Functions
         public void updateHex(Hex changeTo)
         {
-            var index = changeTo.x * gridSize + changeTo.z;
+            var index = changeTo.zx.getValue() * gridSize + changeTo.zx.getKey();
             Hexes[index] = changeTo;
             //Debug.Log("CHECK [" + changeTo.z + "][" + changeTo.x + "]_> " + Hexes[index].instance);
         }
@@ -34,6 +134,8 @@ public class HexTileMap : MonoBehaviour
         public void debugSelectedHex()
         {
             //Debug.Log("****start****");
+            Debug.Log(selectedTile.getList().Count);
+            Debug.Log(selectedTile.getPathList().Count);
             Debug.Log("tile has?_> "+selectedTile.instance);
             Debug.Log(selectedTile.type);
             /*Debug.Log(selectedTile.position);
@@ -66,7 +168,8 @@ public class HexTileMap : MonoBehaviour
 
             var col_guess = Mathf.RoundToInt(ix / tileSize);
             var row_guess = Mathf.RoundToInt(iy / xOffset);
-            Hex closest = new Hex(new Vector3(float.MaxValue, float.MaxValue, float.MaxValue), 0, 0);
+            Hex closest = ScriptableObject.CreateInstance("Hex") as Hex;
+            closest.init(new Vector3(float.MaxValue, float.MaxValue, float.MaxValue), 0, 0);
             int fx = 0;
             int fz = 0;
             int hexChecks = 0;
@@ -110,7 +213,8 @@ public class HexTileMap : MonoBehaviour
 
             var col_guess = Mathf.RoundToInt(ix / tileSize);
             var row_guess = Mathf.RoundToInt(iy / xOffset);
-            Hex closest = new Hex(new Vector3(float.MaxValue, float.MaxValue, float.MaxValue), 0, 0);
+            Hex closest = ScriptableObject.CreateInstance("Hex") as Hex;
+            closest.init(new Vector3(float.MaxValue, float.MaxValue, float.MaxValue), 0, 0);
             int fx = 0;
             int fz = 0;
             int hexChecks = 0;
@@ -122,7 +226,7 @@ public class HexTileMap : MonoBehaviour
                     if (x >= 0f && z >= 0f && x <= gridSize && z <= gridSize)
                     {
                         var index = x * gridSize + z;
-                        if(index < Hexes.Length)
+                        if (index < Hexes.Length)
                         {
                             //checkedHexes.Add(Hexes[index]);
                             
@@ -143,7 +247,7 @@ public class HexTileMap : MonoBehaviour
 
             //Debug.Log(new Vector2(fx, fz));
             //Debug.Log(closest.position);
-            checkedHexes = closest.getList();
+            checkedHexes = closest.getPathList();
 
             return closest;
         }

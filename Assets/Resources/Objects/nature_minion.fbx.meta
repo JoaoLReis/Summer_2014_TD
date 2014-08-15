@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: 6e5b7fc88c0251e4bbba7d4aa70b1989
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Bone
+    100004: Bone_001
+    100006: Bone_002
+    100008: Bone_003
+    100010: Bone_004
+    100012: Bone_005
+    100014: Bone_006
+    100016: Bone_007
+    100018: Bone_008
+    100020: Bone_009
+    100022: Bone_010
+    100024: Bone_011
+    100026: Bone_012
+    100028: Bone_013
+    100030: Bone_014
+    100032: Icosphere_054
+    100034: //RootNode
+    100036: Cube
+    100038: Cube_001
+    100040: Cube_002
+    100042: Cube_003
+    100044: Cube_004
+    100046: Cube_005
+    100048: Cube_006
+    100050: Cube_008
+    100052: Cube_009
+    100054: Cube_010
+    100056: Icosphere
+    100058: Icosphere_001
+    100060: Icosphere_002
+    100062: Icosphere_003
+    100064: Icosphere_004
+    100066: Icosphere_005
+    100068: Icosphere_006
+    100070: Icosphere_007
+    100072: Icosphere_008
+    100074: Icosphere_009
+    100076: Icosphere_010
+    100078: Icosphere_011
+    100080: Icosphere_012
+    100082: Icosphere_013
+    100084: Icosphere_014
+    100086: Icosphere_015
+    100088: Icosphere_016
+    100090: Icosphere_017
+    100092: Icosphere_018
+    100094: Icosphere_019
+    100096: Icosphere_020
+    100098: Icosphere_024
+    100100: Icosphere_025
+    100102: Icosphere_026
+    100104: Icosphere_031
+    100106: Icosphere_032
+    100108: Icosphere_033
+    100110: Icosphere_034
+    100112: Icosphere_036
+    100114: Icosphere_037
+    100116: Icosphere_038
+    100118: Icosphere_039
+    100120: Icosphere_040
+    100122: Icosphere_041
+    100124: Icosphere_042
+    100126: Icosphere_043
+    100128: Icosphere_044
+    100130: Icosphere_045
+    100132: Icosphere_046
+    100134: Icosphere_047
+    100136: Icosphere_048
+    100138: Icosphere_049
+    100140: Icosphere_050
+    100142: Icosphere_051
+    100144: Icosphere_052
+    100146: Icosphere_053
+    100148: Icosphere_055
+    100150: Icosphere_056
+    100152: Icosphere_058
+    100154: Icosphere_059
+    100156: Icosphere_061
+    100158: Icosphere_062
+    100160: Icosphere_070
+    100162: Icosphere_071
+    100164: Icosphere_077
+    100166: Icosphere_078
+    400000: Armature
+    400002: Bone
+    400004: Bone_001
+    400006: Bone_002
+    400008: Bone_003
+    400010: Bone_004
+    400012: Bone_005
+    400014: Bone_006
+    400016: Bone_007
+    400018: Bone_008
+    400020: Bone_009
+    400022: Bone_010
+    400024: Bone_011
+    400026: Bone_012
+    400028: Bone_013
+    400030: Bone_014
+    400032: Icosphere_054
+    400034: //RootNode
+    400036: Cube
+    400038: Cube_001
+    400040: Cube_002
+    400042: Cube_003
+    400044: Cube_004
+    400046: Cube_005
+    400048: Cube_006
+    400050: Cube_008
+    400052: Cube_009
+    400054: Cube_010
+    400056: Icosphere
+    400058: Icosphere_001
+    400060: Icosphere_002
+    400062: Icosphere_003
+    400064: Icosphere_004
+    400066: Icosphere_005
+    400068: Icosphere_006
+    400070: Icosphere_007
+    400072: Icosphere_008
+    400074: Icosphere_009
+    400076: Icosphere_010
+    400078: Icosphere_011
+    400080: Icosphere_012
+    400082: Icosphere_013
+    400084: Icosphere_014
+    400086: Icosphere_015
+    400088: Icosphere_016
+    400090: Icosphere_017
+    400092: Icosphere_018
+    400094: Icosphere_019
+    400096: Icosphere_020
+    400098: Icosphere_024
+    400100: Icosphere_025
+    400102: Icosphere_026
+    400104: Icosphere_031
+    400106: Icosphere_032
+    400108: Icosphere_033
+    400110: Icosphere_034
+    400112: Icosphere_036
+    400114: Icosphere_037
+    400116: Icosphere_038
+    400118: Icosphere_039
+    400120: Icosphere_040
+    400122: Icosphere_041
+    400124: Icosphere_042
+    400126: Icosphere_043
+    400128: Icosphere_044
+    400130: Icosphere_045
+    400132: Icosphere_046
+    400134: Icosphere_047
+    400136: Icosphere_048
+    400138: Icosphere_049
+    400140: Icosphere_050
+    400142: Icosphere_051
+    400144: Icosphere_052
+    400146: Icosphere_053
+    400148: Icosphere_055
+    400150: Icosphere_056
+    400152: Icosphere_058
+    400154: Icosphere_059
+    400156: Icosphere_061
+    400158: Icosphere_062
+    400160: Icosphere_070
+    400162: Icosphere_071
+    400164: Icosphere_077
+    400166: Icosphere_078
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Cube_002
+    2300006: Cube_003
+    2300008: Cube_004
+    2300010: Cube_005
+    2300012: Cube_006
+    2300014: Cube_008
+    2300016: Cube_009
+    2300018: Cube_010
+    2300020: Icosphere
+    2300022: Icosphere_001
+    2300024: Icosphere_002
+    2300026: Icosphere_003
+    2300028: Icosphere_004
+    2300030: Icosphere_005
+    2300032: Icosphere_006
+    2300034: Icosphere_007
+    2300036: Icosphere_008
+    2300038: Icosphere_009
+    2300040: Icosphere_010
+    2300042: Icosphere_011
+    2300044: Icosphere_012
+    2300046: Icosphere_013
+    2300048: Icosphere_014
+    2300050: Icosphere_015
+    2300052: Icosphere_016
+    2300054: Icosphere_017
+    2300056: Icosphere_018
+    2300058: Icosphere_019
+    2300060: Icosphere_020
+    2300062: Icosphere_024
+    2300064: Icosphere_025
+    2300066: Icosphere_026
+    2300068: Icosphere_031
+    2300070: Icosphere_032
+    2300072: Icosphere_033
+    2300074: Icosphere_034
+    2300076: Icosphere_036
+    2300078: Icosphere_037
+    2300080: Icosphere_038
+    2300082: Icosphere_039
+    2300084: Icosphere_040
+    2300086: Icosphere_041
+    2300088: Icosphere_042
+    2300090: Icosphere_043
+    2300092: Icosphere_044
+    2300094: Icosphere_045
+    2300096: Icosphere_046
+    2300098: Icosphere_047
+    2300100: Icosphere_048
+    2300102: Icosphere_049
+    2300104: Icosphere_050
+    2300106: Icosphere_051
+    2300108: Icosphere_052
+    2300110: Icosphere_053
+    2300112: Icosphere_055
+    2300114: Icosphere_056
+    2300116: Icosphere_058
+    2300118: Icosphere_059
+    2300120: Icosphere_061
+    2300122: Icosphere_062
+    2300124: Icosphere_070
+    2300126: Icosphere_071
+    2300128: Icosphere_077
+    2300130: Icosphere_078
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Cube_002
+    3300006: Cube_003
+    3300008: Cube_004
+    3300010: Cube_005
+    3300012: Cube_006
+    3300014: Cube_008
+    3300016: Cube_009
+    3300018: Cube_010
+    3300020: Icosphere
+    3300022: Icosphere_001
+    3300024: Icosphere_002
+    3300026: Icosphere_003
+    3300028: Icosphere_004
+    3300030: Icosphere_005
+    3300032: Icosphere_006
+    3300034: Icosphere_007
+    3300036: Icosphere_008
+    3300038: Icosphere_009
+    3300040: Icosphere_010
+    3300042: Icosphere_011
+    3300044: Icosphere_012
+    3300046: Icosphere_013
+    3300048: Icosphere_014
+    3300050: Icosphere_015
+    3300052: Icosphere_016
+    3300054: Icosphere_017
+    3300056: Icosphere_018
+    3300058: Icosphere_019
+    3300060: Icosphere_020
+    3300062: Icosphere_024
+    3300064: Icosphere_025
+    3300066: Icosphere_026
+    3300068: Icosphere_031
+    3300070: Icosphere_032
+    3300072: Icosphere_033
+    3300074: Icosphere_034
+    3300076: Icosphere_036
+    3300078: Icosphere_037
+    3300080: Icosphere_038
+    3300082: Icosphere_039
+    3300084: Icosphere_040
+    3300086: Icosphere_041
+    3300088: Icosphere_042
+    3300090: Icosphere_043
+    3300092: Icosphere_044
+    3300094: Icosphere_045
+    3300096: Icosphere_046
+    3300098: Icosphere_047
+    3300100: Icosphere_048
+    3300102: Icosphere_049
+    3300104: Icosphere_050
+    3300106: Icosphere_051
+    3300108: Icosphere_052
+    3300110: Icosphere_053
+    3300112: Icosphere_055
+    3300114: Icosphere_056
+    3300116: Icosphere_058
+    3300118: Icosphere_059
+    3300120: Icosphere_061
+    3300122: Icosphere_062
+    3300124: Icosphere_070
+    3300126: Icosphere_071
+    3300128: Icosphere_077
+    3300130: Icosphere_078
+    4300000: Icosphere_054
+    4300006: Icosphere_051
+    4300008: Icosphere_047
+    4300010: Icosphere_046
+    4300012: Icosphere_045
+    4300014: Icosphere_044
+    4300016: Icosphere_041
+    4300018: Icosphere_034
+    4300020: Icosphere_033
+    4300022: Icosphere_032
+    4300024: Icosphere_031
+    4300050: Icosphere_038
+    4300052: Icosphere_048
+    4300054: Icosphere_043
+    4300056: Cube_010
+    4300058: Icosphere_042
+    4300060: Icosphere_040
+    4300062: Icosphere_039
+    4300064: Icosphere_037
+    4300066: Cube_009
+    4300068: Icosphere_036
+    4300070: Cube_008
+    4300072: Icosphere_026
+    4300074: Icosphere_025
+    4300076: Icosphere_024
+    4300078: Icosphere_020
+    4300080: Icosphere_019
+    4300082: Icosphere_018
+    4300084: Cube_006
+    4300086: Icosphere_017
+    4300088: Icosphere_016
+    4300090: Icosphere_015
+    4300092: Cube_005
+    4300094: Icosphere_014
+    4300096: Icosphere_009
+    4300098: Icosphere_008
+    4300100: Cube_004
+    4300102: Icosphere_007
+    4300104: Icosphere_006
+    4300106: Icosphere_005
+    4300108: Cube_003
+    4300110: Cube_002
+    4300112: Cube_001
+    4300114: Cube
+    4300116: Icosphere_013
+    4300118: Icosphere_012
+    4300120: Icosphere_011
+    4300122: Icosphere_010
+    4300124: Icosphere_004
+    4300126: Icosphere_003
+    4300128: Icosphere_001
+    4300130: Icosphere_002
+    4300132: Icosphere
+    7400000: Default Take
+    7400002: Move
+    9500000: //RootNode
+    13700000: Icosphere_054
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 44
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone_001
+        weight: 1
+      - path: Armature/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_004
+        weight: 1
+      - path: Armature/Bone_003/Bone_004/Bone_005
+        weight: 1
+      - path: Armature/Bone_006
+        weight: 1
+      - path: Armature/Bone_006/Bone_007
+        weight: 1
+      - path: Armature/Bone_006/Bone_007/Bone_008
+        weight: 1
+      - path: Armature/Bone_009
+        weight: 1
+      - path: Armature/Bone_009/Bone_010
+        weight: 1
+      - path: Armature/Bone_009/Bone_010/Bone_011
+        weight: 1
+      - path: Armature/Bone_012
+        weight: 1
+      - path: Armature/Bone_012/Bone_013
+        weight: 1
+      - path: Armature/Bone_012/Bone_014
+        weight: 1
+      - path: Icosphere_054
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Move
+      takeName: Move
+      firstFrame: 49
+      lastFrame: 62
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone_001
+        weight: 1
+      - path: Armature/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Armature/Bone_003
+        weight: 1
+      - path: Armature/Bone_003/Bone_004
+        weight: 1
+      - path: Armature/Bone_003/Bone_004/Bone_005
+        weight: 1
+      - path: Armature/Bone_006
+        weight: 1
+      - path: Armature/Bone_006/Bone_007
+        weight: 1
+      - path: Armature/Bone_006/Bone_007/Bone_008
+        weight: 1
+      - path: Armature/Bone_009
+        weight: 1
+      - path: Armature/Bone_009/Bone_010
+        weight: 1
+      - path: Armature/Bone_009/Bone_010/Bone_011
+        weight: 1
+      - path: Armature/Bone_012
+        weight: 1
+      - path: Armature/Bone_012/Bone_013
+        weight: 1
+      - path: Armature/Bone_012/Bone_014
+        weight: 1
+      - path: Icosphere_054
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
