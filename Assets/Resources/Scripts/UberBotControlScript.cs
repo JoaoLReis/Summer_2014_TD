@@ -186,7 +186,7 @@ public class UberBotControlScript : MonoBehaviour
                 {
                     
                     Debug.Log("I HIT SOMETHING");
-                    if (hit.distance > 7.0f)
+                    if (hit.distance > 12.0f)
                     {
                         currentJumpIncrement = 0.0f;
                         currentJumpSpeed = 0.0f;

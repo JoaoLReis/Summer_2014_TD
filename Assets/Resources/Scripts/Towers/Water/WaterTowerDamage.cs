@@ -27,12 +27,9 @@ public class WaterTowerDamage : TowerDamage {
         {
             if (stopped)
                 yield break;
-            if (target == null)
-                tBehaviour.recalculateTarget();
-            else if (target.decreaseHealth(1, stats.getArmorPen(), type))
+            else if (target == null || target.decreaseHealth(1, stats.getArmorPen(), type))
             {
-                yield return new WaitForEndOfFrame();
-                tBehaviour.recalculateTarget();
+                yield break;
             }
             yield return new WaitForSeconds(1 / stats.getSpeed() / stats.getDamage());
         }

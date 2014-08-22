@@ -57,6 +57,7 @@ public class BuildingAction : Imports {
         {
             if (buildMode)
             {
+                buildMenuScript.goHidden();
                 buildMode = false;
                 buildMenu.gameObject.SetActive(false);
                 selected = false;

@@ -29,8 +29,6 @@ public class EarthTowerDamage : TowerDamage {
         {
             if (stopped)
                 yield break;
-            if (target == null)
-                tBehaviour.recalculateTarget();
             else
             {
                 bulletManager.fireBullet();

@@ -8,6 +8,7 @@ public class WaterTowerBehaviour : TowerBehaviour {
     void Awake()
     {
         inRange = new List<GameObject>();
+        notInRange = new List<GameObject>();
         damager = GetComponent<TowerDamage>();
         firing = false;
     }
