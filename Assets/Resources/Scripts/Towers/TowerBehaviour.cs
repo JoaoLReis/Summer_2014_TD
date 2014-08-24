@@ -64,7 +64,6 @@ public abstract class TowerBehaviour : Imports {
                     else
                     {
                         disableFiring();
-                        damager.stop();
                     }
                 }
             }
@@ -108,7 +107,8 @@ public abstract class TowerBehaviour : Imports {
     {
         while(true)
         {
-            Debug.Log("checking");
+            //Debug.Log("checking");
+            
             updateTarget();
             if (!firing)
                 yield break;  
@@ -134,6 +134,29 @@ public abstract class TowerBehaviour : Imports {
         if (target == null)
         {
             inRange.RemoveAll(item => item == null);
+            damager.stop();
+            Debug.Log("Oh ive destroyed something");
+
+            if (inRange.Count > 0)
+            {
+                inRange.RemoveAll(item => item == null);
+                target = getFirstInSight();
+                if (target != null)
+                {
+                    Debug.Log("Fire!");
+                    StartCoroutine("enableFiring", target);
+                }
+                else
+                {
+                    Debug.Log("disable");
+                    disableFiring();
+                }
+            }
+            else
+            {
+                Debug.Log("disable");
+                disableFiring();
+            }
         }
         else if (!inSight(target))
         {
@@ -141,28 +164,6 @@ public abstract class TowerBehaviour : Imports {
             notInRange.Add(target.gameObject);
             inRange.Remove(target.gameObject);
             StartCoroutine("checkForNotInRange");
-        }
-        if (inRange.Count > 0)
-        {
-            inRange.RemoveAll(item => item == null);
-            target = getFirstInSight();
-            if (target != null)
-            {
-                aim.setActiveTarget(target);
-                damager.updateTarget(target);
-            }
-            else
-            {
-                Debug.Log("disable");
-                disableFiring();
-                damager.stop();
-            }
-        }
-        else
-        {
-            Debug.Log("disable");
-            disableFiring();
-            damager.stop();
         }
     }
 
@@ -205,10 +206,10 @@ public abstract class TowerBehaviour : Imports {
         currentWeapon.SetActive(true);
         damager.updateTarget(target);
         damager.enabled = true;
-        yield return new WaitForEndOfFrame();
         damager.start();
         firing = true;
         StartCoroutine("checkTarget");
+        yield return new WaitForEndOfFrame();
     }
 
     protected void disableFiring()
@@ -218,7 +219,7 @@ public abstract class TowerBehaviour : Imports {
         //restartParticleSystem(currentWeapon, false);
         aim.enabled = false;
         aim.setActiveTarget(null);
-        damager.enabled = false;
+        damager.stop();
         firing = false;
     }
 

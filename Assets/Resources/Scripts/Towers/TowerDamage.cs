@@ -11,8 +11,13 @@ public abstract class TowerDamage : Imports {
 
     public void start()
     {
-        if(stopped)
-          StartCoroutine("damageTarget");
+        if (stopped)
+        {
+            StartCoroutine("damageTarget");
+            Debug.Log("started damage coroutine");
+        }
+        else Debug.Log("ugh it isnt stopped");
+          
     }
 
     public void updateTarget(Transform t)

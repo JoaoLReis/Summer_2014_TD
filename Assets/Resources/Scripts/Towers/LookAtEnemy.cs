@@ -24,5 +24,7 @@ public class LookAtEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.LookAt(target);
+        /*if(target != null)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), Time.deltaTime);*/
 	}
 }
