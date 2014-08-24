@@ -41,7 +41,6 @@ public abstract class TowerBehaviour : Imports {
 
     protected void OnTriggerExit(Collider other)
     {
-        Debug.Log("OTE CALLED!: " + "This: " + gameObject + " With That: " + other.name);
         if (other.gameObject.tag == "Enemy")
         {
             //try
@@ -108,7 +107,6 @@ public abstract class TowerBehaviour : Imports {
     {
         while(true)
         {
-            Debug.Log("checking");
             updateTarget();
             if (!firing)
                 yield break;  
@@ -137,7 +135,6 @@ public abstract class TowerBehaviour : Imports {
         }
         else if (!inSight(target))
         {
-            Debug.Log(target.gameObject);
             notInRange.Add(target.gameObject);
             inRange.Remove(target.gameObject);
             StartCoroutine("checkForNotInRange");
@@ -153,14 +150,12 @@ public abstract class TowerBehaviour : Imports {
             }
             else
             {
-                Debug.Log("disable");
                 disableFiring();
                 damager.stop();
             }
         }
         else
         {
-            Debug.Log("disable");
             disableFiring();
             damager.stop();
         }

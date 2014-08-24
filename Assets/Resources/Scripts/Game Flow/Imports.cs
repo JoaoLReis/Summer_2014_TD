@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public abstract class Imports : MonoBehaviour {
+public abstract class Imports : AuxiliaryFunctions{
 
     public enum GameState { Relay, Defence, Success, Failure}
 
