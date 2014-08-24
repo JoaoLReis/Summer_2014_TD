@@ -22,6 +22,7 @@ public class GameManager : Imports {
     private Spawner spawner;
     private GameFinisher finisher;
 
+    private bool victorious;
 
     //PlayerStats
     private int gold;
@@ -44,15 +45,15 @@ public class GameManager : Imports {
     {
         currentLevel = 1;
         relays = new List<GameObject>();
-        level = GetComponent<Level>();
-        spawner = GetComponent<Spawner>();
-        finisher = GetComponent<GameFinisher>();
         relaysNumber = 1;
         gameState = GameState.Relay;
     }
 
     void Start()
     {
+        level = GetComponent<Level>();
+        spawner = GetComponent<Spawner>();
+        finisher = GetComponent<GameFinisher>();
         uiStats = GetComponent<UIAndStats>();
         lives = level.getNumLives();
         gold = level.getGold();
@@ -104,11 +105,16 @@ public class GameManager : Imports {
         if(lives < 1)
         {
             //Finish game -> get script that finishes and activate. Stop game.
+            victorious = false;
+            finishGame();
         }
         Destroy(o);
+    }
 
-
-
+    public void finishGame()
+    {
+        finisher.enabled = true;
+        finisher.finishGame(victorious);
     }
 
     public void destroyEnemy(GameObject o)
@@ -145,6 +151,11 @@ public class GameManager : Imports {
     public GameState getGameState()
     {
         return gameState;
+    }
+
+    public int getLevel()
+    {
+        return currentLevel;
     }
 
     public void createdTower(GameObject tower)

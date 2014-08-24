@@ -1,16 +1,26 @@
 fileFormatVersion: 2
-guid: f54a885b15490f643a6227ef95d2f2b5
+guid: 75340d4a9bda03e4096afeb59ea711b7
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
-    2300000: default
-    3300000: default
-    4300000: default
+    100000: Armature
+    100002: Armature|Base
+    100004: Armature|Main
+    100006: Armature|Main.ik
+    100008: //RootNode
+    100010: sphere2_default
+    400000: Armature
+    400002: Armature|Base
+    400004: Armature|Main
+    400006: Armature|Main.ik
+    400008: //RootNode
+    400010: sphere2_default
+    4300000: sphere2_default
+    7400000: Armature|Defeat
+    7400002: Armature|IdleMove
+    7400004: Armature|Victory
     9500000: //RootNode
+    13700000: sphere2_default
   materials:
     importMaterials: 1
     materialName: 0
@@ -30,7 +40,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

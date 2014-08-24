@@ -127,22 +127,22 @@ public class UIAndStats : MonoBehaviour {
 
         if (wideScreen)
         {
-            play = Resources.Load("Textures/GameSpeed/16x9/Play") as Texture2D;
-            faster = Resources.Load("Textures/GameSpeed/16x9/Faster") as Texture2D;
-            fastest = Resources.Load("Textures/GameSpeed/16x9/Fastest") as Texture2D;
+            play = Resources.Load("Textures/GUITextures/GameSpeed/16x9/Play") as Texture2D;
+            faster = Resources.Load("Textures/GUITextures/GameSpeed/16x9/Faster") as Texture2D;
+            fastest = Resources.Load("Textures/GUITextures/GameSpeed/16x9/Fastest") as Texture2D;
         }
         else
         {
-            play = Resources.Load("Textures/GameSpeed/4x3/Play") as Texture2D;
-            faster = Resources.Load("Textures/GameSpeed/4x3/Faster") as Texture2D;
-            fastest = Resources.Load("Textures/GameSpeed/4x3/Fastest") as Texture2D;
+            play = Resources.Load("Textures/GUITextures/GameSpeed/4x3/Play") as Texture2D;
+            faster = Resources.Load("Textures/GUITextures/GameSpeed/4x3/Faster") as Texture2D;
+            fastest = Resources.Load("Textures/GUITextures/GameSpeed/4x3/Fastest") as Texture2D;
         }
         
-        coin = Resources.Load("Textures/Stats/Gold") as Texture2D;
-        life = Resources.Load("Textures/Stats/Life") as Texture2D;
-        pause = Resources.Load("Textures/MenuButtons/Pause") as Texture2D;
-        sound = Resources.Load("Textures/MenuButtons/Sound") as Texture2D;
-        noSound = Resources.Load("Textures/MenuButtons/NoSound") as Texture2D;
+        coin = Resources.Load("Textures/GUITextures/Stats/Gold") as Texture2D;
+        life = Resources.Load("Textures/GUITextures/Stats/Life") as Texture2D;
+        pause = Resources.Load("Textures/GUITextures/MenuButtons/Pause") as Texture2D;
+        sound = Resources.Load("Textures/GUITextures/MenuButtons/Sound") as Texture2D;
+        noSound = Resources.Load("Textures/GUITextures/MenuButtons/NoSound") as Texture2D;
     }
 
     void OnGUI()
