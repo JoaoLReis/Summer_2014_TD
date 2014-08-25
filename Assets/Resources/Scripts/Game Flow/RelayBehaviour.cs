@@ -8,6 +8,9 @@ public class RelayBehaviour : Imports {
     private Animator animator;
     private GameObject laser;
     private SpawnBehaviour spawn;
+    private GameObject exp1;
+    private GameObject exp2;
+    private GameObject exp3;
 
     void Awake()
     {
@@ -21,6 +24,9 @@ public class RelayBehaviour : Imports {
         animator = GetComponent<Animator>();
         laser = FindChild("LaserRelay").gameObject;
         spawn = GameObject.FindGameObjectWithTag("SpawnObject").GetComponent<SpawnBehaviour>();
+        exp1 = FindChild("Explosion1").gameObject;
+        exp2 = FindChild("Explosion2").gameObject;
+        exp3 = FindChild("Explosion3").gameObject;
     }
 
     void OnTriggerEnter(Collider other)
@@ -38,6 +44,10 @@ public class RelayBehaviour : Imports {
 
         if(isVictory)
             StartCoroutine(WaitForAnimation(animator));
+        else
+        {
+            StartCoroutine("explode");
+        }
     }
 
     private IEnumerator WaitForAnimation(Animator animator)
@@ -48,5 +58,15 @@ public class RelayBehaviour : Imports {
         } while (animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Victory") || animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Victory0") || animator.IsInTransition(0));
 
         laser.SetActive(true);
+    }
+
+    private IEnumerator explode()
+    {
+        exp1.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        exp2.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        exp3.SetActive(true);
+
     }
 }
