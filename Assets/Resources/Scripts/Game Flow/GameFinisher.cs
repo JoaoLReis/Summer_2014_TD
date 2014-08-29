@@ -9,6 +9,7 @@ public class GameFinisher : MonoBehaviour {
     private RelayBehaviour relay;
     private GameManager gManager;
     private bool finishedAnim;
+    private bool isStopped;
 
     private Color color;
 
@@ -16,12 +17,13 @@ public class GameFinisher : MonoBehaviour {
     {
         skin = Resources.Load("Skins/EndGame") as GUISkin;
         finishedAnim = false;
+        isStopped = false;
     }
 
     // Use this for initialization
     void Start()
     {
-        tex = Resources.Load("Textures/GUITextures/EndGame/EndGameBackground") as Texture2D;
+        tex = Resources.Load("Textures/GUITextures/EndGame/GreyBackground") as Texture2D;
         gManager = GetComponent<GameManager>();
         color = Color.white;
         color.a = 0.0f;
@@ -54,10 +56,15 @@ public class GameFinisher : MonoBehaviour {
         if (finishedAnim)
         {
             GUI.color = color;
-            GUI.Window(0, new Rect(0, 0, Screen.width, Screen.height), endGame, "", skin.window);
-            color.a += 0.001f;
-            if (color.a > 0.8f)
+            if (color.a > 0.8f && !isStopped)
+            {
                 Time.timeScale = 0;
+                isStopped = true;
+            }
+            if (color.a < 0.8f)
+                color.a += 0.001f;
+            GUI.Window(0, new Rect(0, 0, Screen.width, Screen.height), endGame, "", skin.window);
+
         }
     }
 
@@ -76,11 +83,13 @@ public class GameFinisher : MonoBehaviour {
 
         if (GUI.Button(new Rect(0, groupHeight / 3, groupWidth, groupHeight / 3), "Restart", skin.button))
         {
+            Time.timeScale = 1;
             Application.LoadLevel(gManager.getLevel());
         }
 
         if (GUI.Button(new Rect(0, groupHeight * 2 / 3, groupWidth, groupHeight / 3), "Main Menu", skin.button))
         {
+            Time.timeScale = 1;
             Application.LoadLevel(0);
         }
 
