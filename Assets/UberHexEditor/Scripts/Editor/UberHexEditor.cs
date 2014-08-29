@@ -23,7 +23,7 @@ public class UberHexEditor : Editor
     Hex KselectedHex;
     Hex LselectedHex;
 
-    List<Hex> path = new List<Hex>();
+    Stack<Hex> path = new Stack<Hex>();
 
     void Awake()
     {
@@ -59,7 +59,8 @@ public class UberHexEditor : Editor
                 if (GUILayout.Button("Generate Hex matrix clears everything"))
                 {
                     Caching.CleanCache();
-                    tileMap.Hexes = new Hex[tileMap.gridSize * tileMap.gridSize];
+                    tileMap.clean();
+                    tileMap.Hexes = new Hex[tileMap.gridSize * tileMap.gridSize];                    
                     GenerateHexGrid();
                 }
                 if (GUILayout.Button("Generate Hex neighbours"))
@@ -264,6 +265,8 @@ public class UberHexEditor : Editor
         {
             Debug.Log("am i deleating anything?_> "+tileMap.selectedTile.instance);
             DestroyImmediate(tileMap.selectedTile.instance);
+            tileMap.selectedTile.genPathList();
+            tileMap.selectedTile.genList();
             tileMap.updateHex(tileMap.selectedTile);
         }
     #endregion
@@ -281,8 +284,8 @@ public class UberHexEditor : Editor
             instance.localPosition = hex.position;
             hex.instance = instance.gameObject;
             defineHexTileType(hex);
+            hex.findBuildPosition();
             tileMap.updateHex(hex);
-            
             //instance.localRotation = Quaternion.identity;//*Quaternion.Euler(0, tileMap.directions[index] * 90, 0);
         }
 
@@ -684,7 +687,7 @@ public class UberHexEditor : Editor
     #region DrawFunctions
         void DrawCheckedTiles()
         {
-            if(tileMap.checkedHexes != null)
+            if(tileMap.checkedHexes != null && tileMap.checkedHexes.Count > 0)
                 foreach (HexKeyValueInt zx in tileMap.checkedHexes)
                 {
                     Hex hex = tileMap.Hexes[zx.getValue() * tileMap.gridSize + zx.getKey()];
@@ -699,8 +702,8 @@ public class UberHexEditor : Editor
                 DrawRect(KselectedHex.position.x, KselectedHex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.blue);
                 DrawRect(LselectedHex.position.x, LselectedHex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.green);
 
-                if (tileMap.searchedHexes != null)
-                    foreach (Hex hex in tileMap.searchedHexes)
+                if (path != null)
+                    foreach (Hex hex in path)
                 {
                     DrawRect(hex.position.x, hex.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.yellow);
                 } 
@@ -714,7 +717,8 @@ public class UberHexEditor : Editor
 
         void DrawSelectedTile()
         {
-            DrawRect(tileMap.selectedTile.position.x, tileMap.selectedTile.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.green);
+            if(tileMap.selectedTile != null)
+                DrawRect(tileMap.selectedTile.position.x, tileMap.selectedTile.position.z, tileMap.tileSize, tileMap.tileSize, Color.white, Color.green);
         }
 
         void DrawRect(float x, float z, float sizeX, float sizeZ, Color outline, Color fill)

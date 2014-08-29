@@ -20,7 +20,7 @@ public class RelayBehaviour : Imports {
         gManager.addRelay(gameObject);
         animator = GetComponent<Animator>();
         laser = FindChild("LaserRelay").gameObject;
-        spawn = GameObject.FindGameObjectWithTag("SpawnObject").GetComponent<SpawnBehaviour>();
+        //spawn = GameObject.FindGameObjectWithTag("SpawnObject").GetComponent<SpawnBehaviour>();
     }
 
     void OnTriggerEnter(Collider other)

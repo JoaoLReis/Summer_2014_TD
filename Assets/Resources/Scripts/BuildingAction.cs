@@ -43,7 +43,7 @@ public class BuildingAction : Imports {
                         break;
                 }
             }
-            else buildMenu.position = intersectedTile.getBuildPosition();
+            else buildMenu.position = intersectedTile.findBuildPosition();
             //Camera.main.GetComponent<UberCamera>().SetLookatBuild(true);
 
         }
